@@ -3,14 +3,18 @@ package com.capstone.dto;
 import lombok.Getter;
 
 @Getter
-public class NanumMemberXYDto {
+public class NanumMemberPosDto {
+    private int pId;
+    private int uId;
     private float uX;
     private float uY;
 
     @Override
     public String toString() {
-        return "NanumMemberXYDto{" +
-                "uX=" + uX +
+        return "NanumMemberPosDto{" +
+                "pId=" + pId +
+                ", uId=" + uId +
+                ", uX=" + uX +
                 ", uY=" + uY +
                 '}';
     }

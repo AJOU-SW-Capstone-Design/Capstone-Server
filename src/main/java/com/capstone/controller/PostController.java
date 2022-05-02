@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -48,11 +49,18 @@ public class PostController {
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
     @GetMapping("/chat")
-    public List<NanumMemberDto> getNanumMembers(@RequestParam int pId){
-        List<NanumMemberDto> nanumMemberDtoList;
-        postService.updateDonePost(pId);
-        nanumMemberDtoList=nanumService.getNanumMembers(pId);
+    public List<NanumMemberPosDto> setNanumPlace(@RequestParam int pId){
+        ArrayList<Double> center;
+        List<NanumMemberPosDto> nanumMemberPosDtoList;
 
-        return nanumMemberDtoList;}
+        //모집 마감 처리
+        postService.updateDonePost(pId);
+        //나눔 멤버 리스트 조회
+        nanumMemberPosDtoList =nanumService.getNanumMembersPos(pId);
+        //중심점 계산
+        center=nanumService.setMembersCenter(nanumMemberPosDtoList);
+        System.out.println(center);
+        return nanumMemberPosDtoList;
+    }
 
 }
