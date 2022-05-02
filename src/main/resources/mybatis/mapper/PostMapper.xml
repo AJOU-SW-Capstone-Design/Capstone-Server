@@ -19,7 +19,7 @@
     </select>
 
     <select id="getPostAll" resultType="PostDto">
-        select * from post;
+        select * from post where done=0;
     </select>
 
     <insert id="createPost" parameterType="PostDto">
@@ -46,5 +46,9 @@
 
     <select id="getDetailPost" parameterType="int" resultType="DetailPostDto">
         select * from (select user.u_id, post.p_id, title, name, category, r_name, order_time, min_price from post left join user on post.u_id=user.u_id join restaurant on post.r_id=restaurant.r_id order by p_id)A where p_id=#{pId};    </select>
+
+    <update id="updateDonePost" parameterType="int">
+        update post set done=1 where p_id=#{pId};
+    </update>
 
 </mapper>

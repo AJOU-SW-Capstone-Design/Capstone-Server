@@ -13,4 +13,5 @@ public interface PostService {
     void createOrders(OrdersDto ordersDto);
     List<MainPostDto> searchPost(String keyword);
     public DetailPostDto getDetailPost(int pId);
+    void updateDonePost(int pId);
 }

@@ -46,4 +46,9 @@ public class PostController {
     @GetMapping("/main/detail")
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
+    @GetMapping("/chat")
+    public DetailPostDto updateDonePost(@RequestParam int pId){
+        postService.updateDonePost(pId);
+        return postService.getDetailPost(pId);}
+
 }

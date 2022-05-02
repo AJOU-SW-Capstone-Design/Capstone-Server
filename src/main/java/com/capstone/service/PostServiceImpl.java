@@ -37,6 +37,7 @@ public class PostServiceImpl {
 
     public DetailPostDto getDetailPost(int pId) { return postMapper.getDetailPost(pId);}
 
+    public void updateDonePost(int pId){postMapper.updateDonePost(pId);}
     ;
 }
 
