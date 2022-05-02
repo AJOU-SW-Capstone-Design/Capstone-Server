@@ -13,6 +13,9 @@ public class UserDto {
     private String account;
     private String location;
     private String phone;
+    private int point;
+    private Double uX;
+    private Double uY;
 
     @Override
     public String toString() {
@@ -24,6 +27,9 @@ public class UserDto {
                 ", account='" + account + '\'' +
                 ", location='" + location + '\'' +
                 ", phone='" + phone + '\'' +
+                ", point=" + point +
+                ", uX=" + uX +
+                ", uY=" + uY +
                 '}';
     }
 }
