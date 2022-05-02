@@ -20,4 +20,24 @@ public class NanumMemberDto {
     private String request;
     private int fee;
 
+    @Override
+    public String toString() {
+        return "NanumMemberDto{" +
+                "pId=" + pId +
+                ", uId=" + uId +
+                ", pw='" + pw + '\'' +
+                ", name='" + name + '\'' +
+                ", bank='" + bank + '\'' +
+                ", account='" + account + '\'' +
+                ", location='" + location + '\'' +
+                ", phone='" + phone + '\'' +
+                ", point=" + point +
+                ", uX=" + uX +
+                ", uY=" + uY +
+                ", menu='" + menu + '\'' +
+                ", price=" + price +
+                ", request='" + request + '\'' +
+                ", fee=" + fee +
+                '}';
+    }
 }

@@ -1,11 +1,11 @@
 package com.capstone.service;
 
-import com.capstone.dto.MainPostDto;
 import com.capstone.dto.NanumMemberDto;
 import com.capstone.mapper.NanumMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service

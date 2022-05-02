@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface NanumService {
     List<NanumMemberDto> getNanumMembers(int pId);
+    int setMembersCenter(List<NanumMemberDto> nanumMemberDtoList);
 
 }

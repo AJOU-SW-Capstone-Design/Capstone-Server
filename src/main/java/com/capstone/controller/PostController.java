@@ -49,7 +49,10 @@ public class PostController {
 
     @GetMapping("/chat")
     public List<NanumMemberDto> getNanumMembers(@RequestParam int pId){
+        List<NanumMemberDto> nanumMemberDtoList;
         postService.updateDonePost(pId);
-        return nanumService.getNanumMembers(pId);}
+        nanumMemberDtoList=nanumService.getNanumMembers(pId);
+
+        return nanumMemberDtoList;}
 
 }
