@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.mapper.NanumMapper">
+    <select id="getNanumMembers" parameterType="int" resultType="NanumMemberDto">
+        select p_id,user.u_id,pw,name,bank,account,location,phone,point,u_x,u_y,menu,price,request,fee from user left join orders on user.u_id=orders.u_id where orders.p_id=#{pId};
+    </select>
+
+</mapper>

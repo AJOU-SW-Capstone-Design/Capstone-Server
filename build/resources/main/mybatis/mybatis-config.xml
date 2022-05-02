@@ -5,6 +5,7 @@
     <mappers>
         <mapper resource="UserMapper.xml"/>
         <mapper resource="PostMapper.xml"/>
+        <mapper resource="NanumMapper.xml"/>
     </mappers>
 
 </configuration>
