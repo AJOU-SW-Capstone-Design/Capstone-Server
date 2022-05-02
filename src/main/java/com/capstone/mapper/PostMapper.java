@@ -15,4 +15,5 @@ public interface PostMapper {
     public void createOrders(OrdersDto ordersDto);
     public  List<MainPostDto> searchPost(String keyword);
     public DetailPostDto getDetailPost(int pId);
+    public void updateDonePost(int pId);
 }
