@@ -7,11 +7,11 @@ import java.time.LocalTime;
 
 @Getter
 public class MainPostDto {
+    private int p_id;
     private String title;
-    private String rName;
-    @JsonProperty("order_time")
-    private LocalTime orderTime;
+    private String r_name;
+    private LocalTime order_time;
     private String category;
-    @JsonProperty("min_price")
-    private int minPrice;
+    private int min_price;
+    private int post_fee;
 }

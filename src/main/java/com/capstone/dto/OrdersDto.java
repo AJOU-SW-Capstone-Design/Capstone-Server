@@ -5,10 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class OrdersDto {
-    @JsonProperty("u_id")
-    private int uId;
-    @JsonProperty("p_id")
-    private int pId;
+    private int u_id;
+    private int p_id;
     private String menu;
     private int price;
     private String request;
@@ -18,8 +16,8 @@ public class OrdersDto {
     @Override
     public String toString() {
         return "OrderDto{" +
-                "uId=" + uId +
-                ", pId='" + pId + '\'' +
+                "uId=" + u_id +
+                ", pId='" + p_id + '\'' +
                 ", menu='" + menu + '\'' +
                 ", price=" + price +
                 ", request='" + request + '\'' +

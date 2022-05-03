@@ -9,8 +9,8 @@ public class DetailPostDto {
     private String title;
     private String category;
     private String name;
-    private String rName;
+    private String r_name;
     private LocalTime order_time;
-    private int minPrice;
+    private int min_price;
 
 }

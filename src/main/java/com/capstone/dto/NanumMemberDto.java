@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class NanumMemberDto {
-    private int pId;
-    private int uId;
+    private int p_id;
+    private int u_id;
     private String pw;
     private String name;
     private String bank;
@@ -13,8 +13,8 @@ public class NanumMemberDto {
     private String location;
     private String phone;
     private int point;
-    private float uX;
-    private float uY;
+    private float u_x;
+    private float u_y;
     private String menu;
     private int price;
     private String request;
@@ -23,8 +23,8 @@ public class NanumMemberDto {
     @Override
     public String toString() {
         return "NanumMemberDto{" +
-                "pId=" + pId +
-                ", uId=" + uId +
+                "pId=" + p_id +
+                ", uId=" + u_id +
                 ", pw='" + pw + '\'' +
                 ", name='" + name + '\'' +
                 ", bank='" + bank + '\'' +
@@ -32,8 +32,8 @@ public class NanumMemberDto {
                 ", location='" + location + '\'' +
                 ", phone='" + phone + '\'' +
                 ", point=" + point +
-                ", uX=" + uX +
-                ", uY=" + uY +
+                ", uX=" + u_x +
+                ", uY=" + u_y +
                 ", menu='" + menu + '\'' +
                 ", price=" + price +
                 ", request='" + request + '\'' +

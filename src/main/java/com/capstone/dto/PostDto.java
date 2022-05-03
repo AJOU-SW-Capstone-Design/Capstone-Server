@@ -9,34 +9,26 @@ import lombok.Getter;
 
 @Getter
 public class PostDto {
-    private int pId;
-    @JsonProperty("title")
+    private int p_id;
     private String title;
-    @JsonProperty("order_time")
-    private LocalTime orderTime;
-    @JsonProperty("post_time")
-    private LocalDateTime postTime;
-    @JsonProperty("shooting_user")
-    private String shootingUser;
-    @JsonProperty("p_location")
-    private String pLocation;
-    @JsonProperty("u_id")
-    private int uId;
-    @JsonProperty("r_id")
-    private int rId;
-
+    private LocalTime order_time;
+    private LocalDateTime post_time;
+    private String shooting_user;
+    private String p_location;
+    private int u_id;
+    private int r_id;
 
     @Override
     public String toString() {
         return "PostDto{" +
-                "pId=" + pId +
+                "pId=" + p_id +
                 ", title='" + title + '\'' +
-                ", orderTime='" + orderTime + '\'' +
-                ", postTime='" + postTime + '\'' +
-                ", shootingUser='" + shootingUser + '\'' +
-                ", pLocation='" + pLocation + '\'' +
-                ", uId=" + uId +
-                ", rId=" + rId +
+                ", orderTime='" + order_time + '\'' +
+                ", postTime='" + post_time + '\'' +
+                ", shootingUser='" + shooting_user + '\'' +
+                ", pLocation='" + p_location + '\'' +
+                ", uId=" + u_id +
+                ", rId=" + r_id +
                 '}';
     }
 }

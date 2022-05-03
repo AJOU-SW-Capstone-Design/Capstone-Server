@@ -5,9 +5,9 @@
 
 <mapper namespace="com.capstone.mapper.NanumMapper">
     <select id="getAllNanumMembers" parameterType="int" resultType="NanumMemberDto">
-        select p_id,user.u_id,pw,name,bank,account,location,phone,point,u_x,u_y,menu,price,request,fee from user left join orders on user.u_id=orders.u_id where orders.p_id=#{pId};
+        select p_id,user.u_id,pw,name,bank,account,location,phone,point,u_x,u_y,menu,price,request,fee from user left join orders on user.u_id=orders.u_id where orders.p_id=#{p_id};
     </select>
     <select id="getNanumMembersPos" parameterType="int" resultType="NanumMemberPosDto">
-        select p_id,user.u_id,u_x,u_y from user left join orders on user.u_id=orders.u_id where orders.p_id=#{pId};
+        select p_id,user.u_id,u_x,u_y from user left join orders on user.u_id=orders.u_id where orders.p_id=#{p_id};
     </select>
 </mapper>

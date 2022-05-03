@@ -19,11 +19,11 @@ public class PostServiceImpl {
     }
 
     //카테고리별 post 찾기
-    public List<PostDto> getPostCategory(String category) {
+    public List<MainPostDto> getPostCategory(String category) {
         return postMapper.getPostCategory(category);
     }
 
-    public List<PostDto> getPostAll() {
+    public List<MainPostDto> getPostAll() {
         return postMapper.getPostAll();
     }
 
@@ -35,9 +35,9 @@ public class PostServiceImpl {
 
     public List<MainPostDto> searchPost(String keyword){ return postMapper.searchPost(keyword);}
 
-    public DetailPostDto getDetailPost(int pId) { return postMapper.getDetailPost(pId);}
+    public DetailPostDto getDetailPost(int p_id) { return postMapper.getDetailPost(p_id);}
 
-    public void updateDonePost(int pId){postMapper.updateDonePost(pId);}
+    public void updateDonePost(int p_id){postMapper.updateDonePost(p_id);}
     ;
 }
 
