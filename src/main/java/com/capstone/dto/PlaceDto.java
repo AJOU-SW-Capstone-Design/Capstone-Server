@@ -4,16 +4,16 @@ import lombok.Getter;
 
 @Getter
 public class PlaceDto {
-    private String plName;
-    private String plAddress;
+    private String pl_name;
+    private String pl_address;
     private double x;
     private double y;
 
     @Override
     public String toString() {
         return "PlaceDto{" +
-                "plName='" + plName + '\'' +
-                ", plAddress='" + plAddress + '\'' +
+                "plName='" + pl_name + '\'' +
+                ", plAddress='" + pl_address + '\'' +
                 ", x=" + x +
                 ", y=" + y +
                 '}';

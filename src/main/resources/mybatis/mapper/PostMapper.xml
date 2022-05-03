@@ -18,20 +18,20 @@
         select * from post where post.r_id in (select r_id from restaurant where category=#{category});
     </select>
 
-    <select id="getPostAll" resultType="PostDto">
-        select * from post where done=0;
+    <select id="getPostAll" resultType="MainPostDto">
+        select post.p_id, title, r_name, order_time, category, min_price, post_fee from post, restaurant where post.done=0 and post.r_id=restaurant.r_id
     </select>
 
-    <insert id="createPost" parameterType="PostDto">
-        INSERT INTO post (title, order_time, post_time, shooting_user, p_location, u_id, r_id) VALUES (#{title}, #{orderTime}, #{postTime}, #{shootingUser}, #{pLocation}, #{uId}, #{rId})
+    <insert id="createPost" parameterType="PostDto" useGeneratedKeys="true" keyProperty="p_id">
+        INSERT INTO post (title, order_time, post_time, shooting_user, p_location, u_id, r_id, done) VALUES (#{title}, #{order_time}, #{post_time}, #{shooting_user}, #{p_location}, #{u_id}, #{r_id}, true)
     </insert>
 
     <insert id="createOrders" parameterType="OrdersDto">
         INSERT INTO orders (
         <include refid="ordersColumns" />
         ) VALUES (
-         #{uId}
-        , #{pId}
+         #{u_id}
+        , #{p_id}
         , #{menu}
         , #{price}
         , #{request}
@@ -45,10 +45,10 @@
     </select>
 
     <select id="getDetailPost" parameterType="int" resultType="DetailPostDto">
-        select * from (select user.u_id, post.p_id, title, name, category, r_name, order_time, min_price from post left join user on post.u_id=user.u_id join restaurant on post.r_id=restaurant.r_id order by p_id)A where p_id=#{pId};    </select>
+        select * from (select user.u_id, post.p_id, title, name, category, r_name, order_time, min_price from post left join user on post.u_id=user.u_id join restaurant on post.r_id=restaurant.r_id order by p_id)A where p_id=#{p_id};    </select>
 
     <update id="updateDonePost" parameterType="int">
-        update post set done=1 where p_id=#{pId};
+        update post set done=1 where p_id=#{p_id};
     </update>
 
 </mapper>

@@ -4,18 +4,18 @@ import lombok.Getter;
 
 @Getter
 public class NanumMemberPosDto {
-    private int pId;
-    private int uId;
-    private float uX;
-    private float uY;
+    private int p_id;
+    private int u_id;
+    private float u_x;
+    private float u_y;
 
     @Override
     public String toString() {
         return "NanumMemberPosDto{" +
-                "pId=" + pId +
-                ", uId=" + uId +
-                ", uX=" + uX +
-                ", uY=" + uY +
+                "pId=" + p_id +
+                ", uId=" + u_id +
+                ", uX=" + u_x +
+                ", uY=" + u_y +
                 '}';
     }
 }

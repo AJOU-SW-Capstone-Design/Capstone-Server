@@ -7,11 +7,11 @@ import com.capstone.dto.PostDto;
 import java.util.List;
 
 public interface PostService {
-    List<PostDto> getPostCategory(String category);
-    List<PostDto> getPostAll();
+    List<MainPostDto> getPostCategory(String category);
+    List<MainPostDto> getPostAll();
     void createPost(PostDto postDto);
     void createOrders(OrdersDto ordersDto);
     List<MainPostDto> searchPost(String keyword);
-    public DetailPostDto getDetailPost(int pId);
-    void updateDonePost(int pId);
+    public DetailPostDto getDetailPost(int p_id);
+    void updateDonePost(int p_id);
 }

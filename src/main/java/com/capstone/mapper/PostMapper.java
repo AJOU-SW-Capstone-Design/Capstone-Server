@@ -9,11 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    public List<PostDto> getPostCategory(String category);
-    public List<PostDto> getPostAll();
+    public List<MainPostDto> getPostCategory(String category);
+    public List<MainPostDto> getPostAll();
     public void createPost(PostDto postDto);
     public void createOrders(OrdersDto ordersDto);
     public  List<MainPostDto> searchPost(String keyword);
-    public DetailPostDto getDetailPost(int pId);
-    public void updateDonePost(int pId);
+    public DetailPostDto getDetailPost(int p_id);
+    public void updateDonePost(int p_id);
 }

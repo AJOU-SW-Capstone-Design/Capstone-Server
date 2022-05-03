@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class UserDto {
-    @JsonProperty("u_id")
-    private int uId;
+    private int u_id;
     private String pw;
     private String name;
     private String bank;
@@ -14,13 +13,13 @@ public class UserDto {
     private String location;
     private String phone;
     private int point;
-    private Double uX;
-    private Double uY;
+    private Double u_x;
+    private Double u_y;
 
     @Override
     public String toString() {
         return "UserDto{" +
-                "uId=" + uId +
+                "uId=" + u_id +
                 ", pw='" + pw + '\'' +
                 ", name='" + name + '\'' +
                 ", bank='" + bank + '\'' +
@@ -28,8 +27,8 @@ public class UserDto {
                 ", location='" + location + '\'' +
                 ", phone='" + phone + '\'' +
                 ", point=" + point +
-                ", uX=" + uX +
-                ", uY=" + uY +
+                ", uX=" + u_x +
+                ", uY=" + u_y +
                 '}';
     }
 }

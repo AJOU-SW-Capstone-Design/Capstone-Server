@@ -5,24 +5,20 @@ import lombok.Getter;
 
 @Getter
 public class RestaurantDto {
-    @JsonProperty("r_id")
-    private int rId;
-    @JsonProperty("r_name")
-    private String rName;
+    private int r_id;
+    private String r_name;
     private String category;
-    @JsonProperty("min_price")
-    private int minPrice;
-    @JsonProperty("order_fee")
-    private String orderFee;
+    private int min_price;
+    private String order_fee;
 
     @Override
     public String toString() {
         return "RestaurantDto{" +
-                "rId=" + rId +
-                ", rName='" + rName + '\'' +
+                "rId=" + r_id +
+                ", rName='" + r_name + '\'' +
                 ", category='" + category + '\'' +
-                ", minPrice=" + minPrice +
-                ", orderFee='" + orderFee + '\'' +
+                ", minPrice=" + min_price +
+                ", orderFee='" + order_fee + '\'' +
                 '}';
     }
 }
