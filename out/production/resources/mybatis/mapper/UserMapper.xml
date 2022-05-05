@@ -31,8 +31,8 @@
         )
     </insert>
 
-    <select id="checkUser" parameterType="UserDto">
-        SELECT * FROM user WHERE user.phone=#{phone} and user.pw=#{pw}
+    <select id="checkUser" parameterType="UserDto" resultType="LoginUserDto">
+        SELECT phone, pw FROM user WHERE phone=#{phone} and pw=#{pw}
     </select>
 
 </mapper>

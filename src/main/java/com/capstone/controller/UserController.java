@@ -18,5 +18,6 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @ResponseBody
     public Boolean checkUser(@RequestBody LoginUserDto loginUserDto) { return userService.checkUser(loginUserDto); }
 }
