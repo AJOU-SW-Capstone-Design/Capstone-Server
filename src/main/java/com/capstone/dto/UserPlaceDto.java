@@ -3,7 +3,7 @@ package com.capstone.dto;
 import lombok.Getter;
 
 @Getter
-public class PlaceDto {
+public class UserPlaceDto {
     private String pl_name;
     private String pl_address;
     private double x;
