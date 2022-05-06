@@ -10,25 +10,27 @@ public class UserDto {
     private String name;
     private String bank;
     private String account;
-    private String location;
     private String phone;
     private int point;
     private Double u_x;
     private Double u_y;
+    private String road_address;
+    private String address;
 
     @Override
     public String toString() {
         return "UserDto{" +
-                "uId=" + u_id +
+                "u_id=" + u_id +
                 ", pw='" + pw + '\'' +
                 ", name='" + name + '\'' +
                 ", bank='" + bank + '\'' +
                 ", account='" + account + '\'' +
-                ", location='" + location + '\'' +
                 ", phone='" + phone + '\'' +
                 ", point=" + point +
-                ", uX=" + u_x +
-                ", uY=" + u_y +
+                ", u_x=" + u_x +
+                ", u_y=" + u_y +
+                ", road_address='" + road_address + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
