@@ -117,7 +117,7 @@ public class PostController {
     @GetMapping("/main/detail")
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
-    @GetMapping("/chat")
+    @PostMapping("/chat")
     public CategoryPlaceDto setNanumPlace(@RequestParam int pId) throws JSONException {
         ArrayList<Double> center;
         List<NanumMemberPosDto> nanumMemberPosDtoList;
