@@ -13,8 +13,8 @@ public class NanumMemberDto {
     private String location;
     private String phone;
     private int point;
-    private float u_x;
-    private float u_y;
+    private double u_x;
+    private double u_y;
     private String menu;
     private int price;
     private String request;

@@ -20,7 +20,7 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-                "u_id=" + u_id +
+                "uId=" + u_id +
                 ", pw='" + pw + '\'' +
                 ", name='" + name + '\'' +
                 ", bank='" + bank + '\'' +

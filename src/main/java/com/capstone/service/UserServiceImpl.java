@@ -2,6 +2,7 @@ package com.capstone.service;
 
 import com.capstone.dto.LoginUserDto;
 import com.capstone.dto.UserDto;
+import com.capstone.dto.UserNeighborDto;
 import com.capstone.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,6 @@ public class UserServiceImpl {
         else
             return true;
     }
+
+    public void insertUserNeighbor(UserNeighborDto userNeighborDto){userMapper.insertUserNeighbor(userNeighborDto);}
 }
