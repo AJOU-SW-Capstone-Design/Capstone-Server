@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PostController {
     @Autowired
@@ -108,12 +107,6 @@ public class PostController {
     public List<RestaurantDto> getSearchRestaurantList(@RequestParam String rName) {
         //검색한 키워드가 포함된 식당 정보 리스트 돌려주기
         return postService.getSearchRestaurantList(rName);
-    }
-
-//    @PutMapping("/post")
-    public RestaurantDto getSearchRestaurant(@RequestBody int rId) {
-        //식당 선택시 식당 정보 돌려주기
-        return postService.getSearchRestaurant(rId);
     }
 
     @GetMapping( "/main/search")
