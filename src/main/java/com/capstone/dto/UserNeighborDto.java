@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class UserNeighborDto {
     private Integer u_id;
-    private Double u_x;
-    private Double u_y;
+    private double u_x;
+    private double u_y;
     private String road_address;
     private String address;
 

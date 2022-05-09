@@ -2,9 +2,11 @@ package com.capstone.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 @AllArgsConstructor
+@Setter
 public class CategoryPlaceDto implements Comparable<CategoryPlaceDto>{
     private String place_name;
     private String category_group_code;
@@ -14,7 +16,6 @@ public class CategoryPlaceDto implements Comparable<CategoryPlaceDto>{
     private double y;
     //중심점과의 거리
     private double distance;
-
 
     @Override
     public String toString() {

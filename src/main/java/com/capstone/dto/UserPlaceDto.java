@@ -1,8 +1,10 @@
 package com.capstone.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class UserPlaceDto {
     private String pl_name;
     private String pl_address;
@@ -11,7 +13,7 @@ public class UserPlaceDto {
 
     @Override
     public String toString() {
-        return "PlaceDto{" +
+        return "UserPlaceDto{" +
                 "plName='" + pl_name + '\'' +
                 ", plAddress='" + pl_address + '\'' +
                 ", x=" + x +
