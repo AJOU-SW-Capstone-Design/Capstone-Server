@@ -40,8 +40,6 @@ public class NanumServiceImpl {
 
     private final KakaoProperties kakaoProperties;
 
-    private int apiCount = 0;
-
     @Value("${tmap.api-key}")
     private String key;
 
@@ -127,7 +125,6 @@ public class NanumServiceImpl {
     }
 
     public int getWalkingTime(double startX, double startY, double endX, double endY){
-        apiCount++;
         String url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result";
 
         RestTemplate restTemplate = new RestTemplate();
@@ -147,17 +144,12 @@ public class NanumServiceImpl {
         headers.add("appKey", key);
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
-
-        //error - 초당 처리 건수 초과 에러 처리
-        if(apiCount == 3){
-            apiCount = 0;
-            try{
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.err.format("IOException: %s%n", e);
-            }
-        }
         HttpEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.err.format("IOException: %s%n", e);
+        }
 
         String totalTimeStr = response.getBody().toString().split("\"totalTime\": ")[1].split(",")[0];
         int totalTime = Integer.parseInt(totalTimeStr);
