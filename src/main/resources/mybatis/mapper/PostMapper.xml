@@ -50,7 +50,7 @@
     </update>
 
     <update id="updateNanumPlace" parameterType="HashMap">
-        update post set p_location_x=#{x}, p_loaction_y=#{y}  where p_id=#{pId};
+        update post set p_location_x=#{x}, p_location_y=#{y}  where p_id=#{pId};
     </update>
 
     <update id="updateShootingPost" parameterType="ShootingInfoDto">
