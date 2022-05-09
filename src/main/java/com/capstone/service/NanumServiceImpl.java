@@ -8,6 +8,7 @@ import com.capstone.dto.PostDto;
 import com.capstone.dto.UserPlaceDto;
 import com.capstone.mapper.NanumMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -39,14 +40,19 @@ public class NanumServiceImpl {
 
     private final KakaoProperties kakaoProperties;
 
+    private int apiCount = 0;
+
+    @Value("${tmap.api-key}")
+    private String key;
+
     public NanumServiceImpl(NanumMapper nanumMapper, KakaoProperties kakaoProperties) {
         this.nanumMapper = nanumMapper;
         this.kakaoProperties = kakaoProperties;
     }
 
-    public List<NanumMemberDto> getAllNanumMembers(int p_id){ return nanumMapper.getAllNanumMembers(p_id);}
+    public List<NanumMemberDto> getAllNanumMembers(int pId){ return nanumMapper.getAllNanumMembers(pId);}
 
-    public List<NanumMemberPosDto> getNanumMembersPos(int p_id){ return nanumMapper.getNanumMembersPos(p_id);}
+    public List<NanumMemberPosDto> getNanumMembersPos(int pId){ return nanumMapper.getNanumMembersPos(pId);}
 
     public ArrayList<Double> setMembersCenter(List<NanumMemberPosDto> nanumMemberPosDtoList){
         int memberNum=0;
@@ -121,8 +127,8 @@ public class NanumServiceImpl {
     }
 
     public int getWalkingTime(double startX, double startY, double endX, double endY){
+        apiCount++;
         String url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result";
-        String key = "l7xx26b87d65e609452ead9149299e4a2e46";
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -142,6 +148,15 @@ public class NanumServiceImpl {
 
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
 
+        //error - 초당 처리 건수 초과 에러 처리
+        if(apiCount == 3){
+            apiCount = 0;
+            try{
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.err.format("IOException: %s%n", e);
+            }
+        }
         HttpEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 
         String totalTimeStr = response.getBody().toString().split("\"totalTime\": ")[1].split(",")[0];
@@ -150,17 +165,17 @@ public class NanumServiceImpl {
         return totalTime;
     }
 
-    public UserPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<UserPlaceDto> placeDtoList) {
+    public CategoryPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<CategoryPlaceDto> categoryPlaceDtos) {
         double min = Double.MAX_VALUE;
         int min_index = 0;
 
         int memberNum = nanumMemberPosDtoList.size();
         int [] walkingTimeList = new int[memberNum];
-        int placeNum = placeDtoList.size();
+        int placeNum = categoryPlaceDtos.size();
 
         for(int i=0; i<placeNum; i++) {
-            double x = placeDtoList.get(i).getX();
-            double y = placeDtoList.get(i).getY();
+            double x = categoryPlaceDtos.get(i).getX();
+            double y = categoryPlaceDtos.get(i).getY();
             for (int j = 0; j < memberNum; j++) {
                 double u_x = nanumMemberPosDtoList.get(j).getU_x();
                 double u_y = nanumMemberPosDtoList.get(j).getU_y();
@@ -183,6 +198,6 @@ public class NanumServiceImpl {
                 min_index = i;
             }
         }
-        return placeDtoList.get(min_index);
+        return categoryPlaceDtos.get(min_index);
     };
 }

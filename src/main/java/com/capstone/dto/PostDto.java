@@ -14,21 +14,31 @@ public class PostDto {
     private LocalTime order_time;
     private LocalDateTime post_time;
     private String shooting_user;
-    private String p_location;
+    private double p_location_x;
+    private double p_location_y;
     private int u_id;
     private int r_id;
+    private int post_fee;
+    private int total_point;
+    private boolean done;
+    private int total_fee;
 
     @Override
     public String toString() {
         return "PostDto{" +
-                "pId=" + p_id +
+                "p_id=" + p_id +
                 ", title='" + title + '\'' +
-                ", orderTime='" + order_time + '\'' +
-                ", postTime='" + post_time + '\'' +
-                ", shootingUser='" + shooting_user + '\'' +
-                ", pLocation='" + p_location + '\'' +
-                ", uId=" + u_id +
-                ", rId=" + r_id +
+                ", order_time=" + order_time +
+                ", post_time=" + post_time +
+                ", shooting_user='" + shooting_user + '\'' +
+                ", p_location_x='" + p_location_x + '\'' +
+                ", p_location_y='" + p_location_y + '\'' +
+                ", u_id=" + u_id +
+                ", r_id=" + r_id +
+                ", post_fee=" + post_fee +
+                ", total_point=" + total_point +
+                ", done=" + done +
+                ", total_fee=" + total_fee +
                 '}';
     }
 }

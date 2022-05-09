@@ -11,7 +11,6 @@ public class OrdersDto {
     private int price;
     private String request;
     private int fee;
-    private boolean remit;
 
     @Override
     public String toString() {
@@ -22,7 +21,6 @@ public class OrdersDto {
                 ", price=" + price +
                 ", request='" + request + '\'' +
                 ", fee=" + fee +
-                ", remit=" + remit +
                 '}';
     }
 }

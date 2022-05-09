@@ -3,12 +3,14 @@ package com.capstone.controller;
 import com.capstone.configuration.properties.KakaoProperties;
 import com.capstone.dto.*;
 import com.capstone.service.NanumServiceImpl;
+import com.capstone.service.PostService;
 import com.capstone.service.PostServiceImpl;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.core.annotation.Order;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -46,7 +49,71 @@ public class PostController {
     @PutMapping("/post")
     public OrdersDto createOrders(@RequestBody OrdersDto ordersDto){
         postService.createOrders(ordersDto);
+
+        //현재 모인 총 금액(total_point) 업데이트
+        int pId = ordersDto.getP_id();
+        postService.updateTotalPoint(ordersDto);
+        int totalPoint = postService.getTotalPoint(pId);
+        int totalFee = 0;
+        int userOrderFee = 0;   //현재 주문서 작성한 참여자가 내야할 배달비
+        //해당 나눔 게시글의 식당 배달비 정보 반환
+        String orderFee = postService.getOrderFee(pId);
+        String[] orderFeeList = orderFee.split("\\.");
+        int listSize = orderFeeList.length;
+        for(int i=0; i<listSize; i++){
+            String[] tmpOrderFee = orderFeeList[i].split(",");
+            int price = Integer.parseInt(tmpOrderFee[0].substring(1));  //주문금액
+            int fee = Integer.parseInt(tmpOrderFee[1].substring(0,tmpOrderFee[1].length()-1));     //배달비
+            if (totalPoint >= price) {
+                //모인 금액에 따른 현재 배달비(total_fee) 업데이트
+                HashMap<String, Object> totalFeeInfo = new HashMap<String, Object>();
+                totalFeeInfo.put("pId", pId);
+                totalFeeInfo.put("totalFee", fee);
+                totalFee = fee;
+                postService.updateTotalFee(totalFeeInfo);
+            }
+        }
+
+        //현재 나눔 참여시 내야할 배달비(postFee), 현재 각 나눔 참여자가 부담하는 배달비(userOrderFee) 업데이트
+        PostDto postDto = postService.getPostInfo(pId);
+        if(postDto.getShooting_user() != null)
+            postService.updateShootingPostFee(pId);     //shooting_user 있을 시 postFee 업데이트
+        else{
+            //postFee 업데이트
+            List<OrdersDto> ordersDtoList = postService.getUserList(pId);
+            int userNum = ordersDtoList.size();
+            userOrderFee = totalFee / userNum;
+            int postFee = totalFee / (userNum+1);
+            HashMap<String, Object> postFeeInfo = new HashMap<String, Object>();
+            postFeeInfo.put("pId", pId);
+            postFeeInfo.put("postFee", postFee);
+            postService.updatePostFee(postFeeInfo);
+
+            // userOrderFee 업데이트
+            List<Integer> postUserIdList = postService.getPostUserId(pId);  //해당 게시글에 참여한 사용자 목록
+            int postUserIdListSize = postUserIdList.size();
+            for(int i=0; i<postUserIdListSize; i++) {
+                HashMap<String, Object> userOrderFeeInfo = new HashMap<String, Object>();
+                userOrderFeeInfo.put("pId", pId);
+                userOrderFeeInfo.put("uId", postUserIdList.get(i));
+                userOrderFeeInfo.put("userOrderFee", userOrderFee);
+                postService.updateUserOrderFee(userOrderFeeInfo);
+            }
+        }
+
         return ordersDto;
+    }
+
+    @GetMapping("/post")
+    public List<RestaurantDto> getSearchRestaurantList(@RequestParam String rName) {
+        //검색한 키워드가 포함된 식당 정보 리스트 돌려주기
+        return postService.getSearchRestaurantList(rName);
+    }
+
+//    @PutMapping("/post")
+    public RestaurantDto getSearchRestaurant(@RequestBody int rId) {
+        //식당 선택시 식당 정보 돌려주기
+        return postService.getSearchRestaurant(rId);
     }
 
     @GetMapping( "/main/search")
@@ -58,7 +125,7 @@ public class PostController {
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
     @GetMapping("/chat")
-    public UserPlaceDto setNanumPlace(@RequestParam int pId) throws JSONException {
+    public CategoryPlaceDto setNanumPlace(@RequestParam int pId) throws JSONException {
         ArrayList<Double> center;
         List<NanumMemberPosDto> nanumMemberPosDtoList;
 
@@ -66,11 +133,28 @@ public class PostController {
         postService.updateDonePost(pId);
 
         //나눔 멤버 리스트 조회
-        nanumMemberPosDtoList =nanumService.getNanumMembersPos(pId);
+        nanumMemberPosDtoList = nanumService.getNanumMembersPos(pId);
 
         //멤버 없는 경우
         if (nanumMemberPosDtoList.size()==0)
             return null;
+
+        //shooting_user 있는 경우 > 나눔 위치 계산 X
+        PostDto postDto = postService.getPostInfo(pId);
+        if(postDto.getShooting_user() != null){
+            UserDto shootingUserDto = postService.getShootingUserInfo(pId);
+            CategoryPlaceDto categoryPlaceDto = new CategoryPlaceDto(
+                    shootingUserDto.getName() + " 사용자의 위치",
+                    "",
+                    shootingUserDto.getRoad_address(),
+                    "",
+                    shootingUserDto.getU_x(),
+                    shootingUserDto.getU_y(),
+                    0
+            );
+
+            return categoryPlaceDto;
+        }
 
         //중심점 계산
         center=nanumService.setMembersCenter(nanumMemberPosDtoList);
@@ -79,23 +163,22 @@ public class PostController {
         ArrayList<CategoryPlaceDto> categoryPlaceDtos= nanumService.getCategoryPlace(center.get(0),center.get(1));
         Collections.sort(categoryPlaceDtos);
 
-        //CategoryPlaceDtoList 내의 객체들 -> UserPlaceDto 객체 타입으로 변환
-        ArrayList<UserPlaceDto> userPlaceDtoList = new ArrayList<>();
-        int len = categoryPlaceDtos.size();
-        for(int i=0; i<len; i++) {
-            UserPlaceDto userPlaceDto = new UserPlaceDto();
-            CategoryPlaceDto categoryPlaceDto = categoryPlaceDtos.get(i);
-            userPlaceDto.setPl_name(categoryPlaceDto.getPlace_name());
-            userPlaceDto.setPl_address(categoryPlaceDto.getAddress_name());
-            userPlaceDto.setX(categoryPlaceDto.getX());
-            userPlaceDto.setY(categoryPlaceDto.getY());
-            userPlaceDtoList.add(userPlaceDto);
-        }
+        CategoryPlaceDto nanumPlace = nanumService.setPlace(nanumMemberPosDtoList, categoryPlaceDtos);
 
-        UserPlaceDto nanumPlace = nanumService.setPlace(nanumMemberPosDtoList, userPlaceDtoList);
-
+        // DB에 저장
+        HashMap<String, Object> nanumPlaceInfo = new HashMap<String, Object>();
+        nanumPlaceInfo.put("pId", pId);
+        nanumPlaceInfo.put("x", nanumPlace.getX());
+        nanumPlaceInfo.put("y", nanumPlace.getY());
+        postService.updateNanumPlace(nanumPlaceInfo);
         return nanumPlace;
-
     }
 
+    @PutMapping("/chat")
+    public void setShooting(@RequestBody ShootingInfoDto shootingInfoDto) {
+        //내가 쏜다 기능
+        postService.updateShootingPost(shootingInfoDto);                    //post 테이블 업데이트
+        postService.updateShootingOrders(shootingInfoDto.getP_id());        //orders 테이블 업데이트 - shooting_user가 아닌 참여자들의 fee를 0으로
+        postService.updateShootingUserOrders(shootingInfoDto.getP_id());    //orders 테이블 업데이트 - shooting_user인 참여자의 fee를 total_fee로
+    }
 }

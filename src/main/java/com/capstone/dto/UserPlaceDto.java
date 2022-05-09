@@ -13,7 +13,7 @@ public class UserPlaceDto {
 
     @Override
     public String toString() {
-        return "PlaceDto{" +
+        return "UserPlaceDto{" +
                 "plName='" + pl_name + '\'' +
                 ", plAddress='" + pl_address + '\'' +
                 ", x=" + x +
