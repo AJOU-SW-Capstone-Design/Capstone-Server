@@ -11,6 +11,7 @@
 		, name
         , bank
 		, account
+		, location
 		, phone
     </sql>
     <!-- parameterType: 쿼리 실행에 필요한 parameter 타입 지정
@@ -25,9 +26,14 @@
         , #{name}
         , #{bank}
         , #{account}
+        , #{location}
         , #{phone}
         )
     </insert>
+
+    <select id="checkUser" parameterType="UserDto" resultType="LoginUserDto">
+        SELECT phone, pw FROM user WHERE phone=#{phone} and pw=#{pw}
+    </select>
 
     <update id="insertUserNeighbor" parameterType="UserNeighborDto">
         UPDATE user SET u_x=#{u_x}, u_y=#{u_y}, road_address=#{road_address}, address=#{address} WHERE u_id=#{u_id};

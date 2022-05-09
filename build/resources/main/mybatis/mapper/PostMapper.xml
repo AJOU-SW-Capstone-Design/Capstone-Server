@@ -49,4 +49,75 @@
         update post set done=1 where p_id=#{p_id};
     </update>
 
+    <update id="updateNanumPlace" parameterType="HashMap">
+        update post set p_location_x=#{x}, p_location_y=#{y}  where p_id=#{pId};
+    </update>
+
+    <update id="updateShootingPost" parameterType="ShootingInfoDto">
+        update post left join orders on orders.p_id=post.p_id left join user on orders.u_id=user.u_id set shooting_user=#{u_id}, p_location_x=user.u_x, p_location_y=user.u_y, post_fee=0 where post.p_id=#{p_id};
+    </update>
+
+    <select id="getShootingPostUsers" parameterType="int" resultType="OrdersDto">
+        select * from orders where p_id=#{pId};
+    </select>
+
+    <update id="updateShootingOrders" parameterType="int">
+        update orders set orders.fee=0 where orders.p_id=#{pId};
+    </update>
+
+    <update id="updateShootingUserOrders" parameterType="int">
+        update orders left join post on orders.p_id=post.p_id set orders.fee=post.total_fee where orders.p_id=#{pId} and orders.u_id=post.shooting_user;
+    </update>
+
+    <update id="updateTotalPoint" parameterType="OrdersDto">
+        update post set total_point=total_point+#{price} where p_id=#{p_id};
+    </update>
+
+    <select id="getTotalPoint" parameterType="int" resultType="int">
+        select total_point from post where p_id=#{pId};
+    </select>
+
+    <select id="getOrderFee" parameterType="int" resultType="String">
+        select order_fee from restaurant, post where p_id=#{pId} and restaurant.r_id=post.r_id;
+    </select>
+
+    <update id="updateTotalFee" parameterType="HashMap">
+        update post set total_fee=#{totalFee} where p_id=#{pId};
+    </update>
+
+    <select id="getPostInfo" parameterType="int" resultType="PostDto">
+        select * from post where p_id=#{pId};
+    </select>
+
+    <update id="updateShootingPostFee" parameterType="int">
+        update post set post_fee=0 where p_id=#{pId};
+    </update>
+
+    <select id="getUserList" parameterType="int" resultType="OrdersDto">
+        select * from orders where p_id=#{pId};
+    </select>
+
+    <update id="updatePostFee" parameterType="HashMap">
+        update post set post_fee=#{postFee} where p_id=#{pId};
+    </update>
+
+    <select id="getPostUserId" parameterType="int" resultType="int">
+        select u_id from orders where p_id=#{pId};
+    </select>
+
+    <update id="updateUserOrderFee" parameterType="HashMap">
+        update orders set fee=#{userOrderFee} where p_id=#{pId} and u_id=#{uId};
+    </update>
+
+    <select id="getShootingUserInfo" parameterType="int" resultType="UserDto">
+        select * from user, post where post.p_id=#{pId} and user.u_id=post.shooting_user
+    </select>
+
+    <select id="getSearchRestaurantList" parameterType="String" resultType="RestaurantDto">
+        select * from restaurant where r_name like CONCAT('%',#{searchKeyword},'%');
+    </select>
+
+    <select id="getSearchRestaurant" parameterType="int" resultType="RestaurantDto">
+        select * from restaurant where r_id=#{rId};
+    </select>
 </mapper>
