@@ -7,9 +7,9 @@ import com.capstone.service.PostService;
 import com.capstone.service.PostServiceImpl;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.core.annotation.Order;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PostController {
     @Autowired

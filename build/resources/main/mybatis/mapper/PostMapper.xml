@@ -22,7 +22,7 @@
     </select>
 
     <insert id="createPost" parameterType="PostDto" useGeneratedKeys="true" keyProperty="p_id">
-        INSERT INTO post (title, order_time, post_time, shooting_user, p_location, u_id, r_id, done) VALUES (#{title}, #{order_time}, #{post_time}, #{shooting_user}, #{p_location}, #{u_id}, #{r_id}, true)
+        INSERT INTO post (title, order_time, post_time, shooting_user, p_location_x, p_location_y, u_id, r_id, done) VALUES (#{title}, #{order_time}, #{post_time}, #{shooting_user}, #{p_location_x}, #{p_location_y}, #{u_id}, #{r_id}, true)
     </insert>
 
     <insert id="createOrders" parameterType="OrdersDto">
