@@ -17,10 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class PostController {
@@ -117,8 +114,9 @@ public class PostController {
     @GetMapping("/main/detail")
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
-    @PostMapping("/chat/locate")
-    public CategoryPlaceDto setNanumPlace(@RequestParam int pId) throws JSONException {
+    @PostMapping("/chat")
+    public CategoryPlaceDto setNanumPlace(@@RequestBody Map<String, String> param) throws JSONException {
+        int pId = Integer.parseInt(param.get("pId"));;
         ArrayList<Double> center;
         List<NanumMemberPosDto> nanumMemberPosDtoList;
 
