@@ -71,6 +71,8 @@ public class PostServiceImpl {
     public List<RestaurantDto> getSearchRestaurantList(String searchKeyword){ return postMapper.getSearchRestaurantList(searchKeyword);}
 
     public RestaurantDto getSearchRestaurant(int rId){ return postMapper.getSearchRestaurant(rId);}
+
+    public List<NanumMemberPosDto> getNanumMemberPos(int pId){ return postMapper.getNanumMemberPos(pId);}
     ;
 }
 

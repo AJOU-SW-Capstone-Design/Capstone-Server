@@ -32,4 +32,5 @@ public interface PostMapper {
     public UserDto getShootingUserInfo(int pId);
     public List<RestaurantDto> getSearchRestaurantList(String searchKeyword);
     public RestaurantDto getSearchRestaurant(int rId);
+    public List<NanumMemberPosDto> getNanumMemberPos(int pId);
 }

@@ -31,4 +31,5 @@ public interface PostService {
     UserDto getShootingUserInfo(int pId);
     List<RestaurantDto> getSearchRestaurantList(String searchKeyword);
     RestaurantDto getSearchRestaurant(int rId);
+    List<NanumMemberPosDto> getNanumMemberPos(int pId);
 }
