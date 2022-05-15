@@ -15,16 +15,16 @@ public class UserServiceImpl {
         this.userMapper = userMapper;
     }
 
-    public void insertUser(UserDto userDto) {
-       userMapper.insertUser(userDto);
+    public int insertUser(UserDto userDto) {
+       return userMapper.insertUser(userDto);
     }
 
-    public Boolean checkUser(LoginUserDto loginUserDto) {
-        LoginUserDto tempLoginUserDto = userMapper.checkUser(loginUserDto);
+    public UserDto checkUser(LoginUserDto loginUserDto) {
+        UserDto tempLoginUserDto = userMapper.checkUser(loginUserDto);
         if (tempLoginUserDto == null)
-            return false;
+            return null;
         else
-            return true;
+            return tempLoginUserDto;
     }
 
     public void insertUserNeighbor(UserNeighborDto userNeighborDto){userMapper.insertUserNeighbor(userNeighborDto);}
