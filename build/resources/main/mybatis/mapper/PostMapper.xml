@@ -13,8 +13,8 @@
 		, fee
     </sql>
 
-    <select id="getPostCategory" parameterType="String" resultType="PostDto">
-        select * from post where post.r_id in (select r_id from restaurant where category=#{category});
+    <select id="getPostCategory" parameterType="String" resultType="MainPostDto">
+        select post.p_id, title, r_name, order_time, category, min_price, post_fee from post, restaurant where post.done=0 and post.r_id=restaurant.r_id and restaurant.category=#{category};
     </select>
 
     <select id="getPostAll" resultType="MainPostDto">
@@ -22,7 +22,7 @@
     </select>
 
     <insert id="createPost" parameterType="PostDto" useGeneratedKeys="true" keyProperty="p_id">
-        INSERT INTO post (title, order_time, post_time, shooting_user, p_location_x, p_location_y, u_id, r_id, done) VALUES (#{title}, #{order_time}, #{post_time}, #{shooting_user}, #{p_location_x}, #{p_location_y}, #{u_id}, #{r_id}, true)
+        INSERT INTO post (title, order_time, post_time, shooting_user, p_location_x, p_location_y, u_id, r_id, done) VALUES (#{title}, #{order_time}, #{post_time}, #{shooting_user}, #{p_location_x}, #{p_location_y}, #{u_id}, #{r_id}, false)
     </insert>
 
     <insert id="createOrders" parameterType="OrdersDto">
@@ -119,5 +119,9 @@
 
     <select id="getSearchRestaurant" parameterType="int" resultType="RestaurantDto">
         select * from restaurant where r_id=#{rId};
+    </select>
+
+    <select id="getNanumMemberPos" parameterType="int" resultType="NanumMemberPosDto">
+        select orders.p_id, orders.u_id, u_x, u_y from orders, user where p_id=#{pId} and user.u_id=orders.u_id;
     </select>
 </mapper>

@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PostController {
     @Autowired
@@ -110,12 +109,6 @@ public class PostController {
         return postService.getSearchRestaurantList(rName);
     }
 
-//    @PutMapping("/post")
-    public RestaurantDto getSearchRestaurant(@RequestBody int rId) {
-        //식당 선택시 식당 정보 돌려주기
-        return postService.getSearchRestaurant(rId);
-    }
-
     @GetMapping( "/main/search")
     public List<MainPostDto> searchPost(@RequestParam String keyword){
         return postService.searchPost(keyword);
@@ -124,7 +117,7 @@ public class PostController {
     @GetMapping("/main/detail")
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
-    @PostMapping("/chat")
+    @PostMapping("/chat/locate")
     public CategoryPlaceDto setNanumPlace(@RequestParam int pId) throws JSONException {
         ArrayList<Double> center;
         List<NanumMemberPosDto> nanumMemberPosDtoList;
@@ -181,4 +174,10 @@ public class PostController {
         postService.updateShootingOrders(shootingInfoDto.getP_id());        //orders 테이블 업데이트 - shooting_user가 아닌 참여자들의 fee를 0으로
         postService.updateShootingUserOrders(shootingInfoDto.getP_id());    //orders 테이블 업데이트 - shooting_user인 참여자의 fee를 total_fee로
     }
+
+    @GetMapping("/chat")
+    public List<NanumMemberPosDto> getNanumMemberPos(@RequestParam int pId) {
+        return postService.getNanumMemberPos(pId);
+    }
+
 }
