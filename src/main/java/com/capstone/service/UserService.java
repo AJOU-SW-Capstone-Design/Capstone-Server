@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 
 public interface UserService {
-    void insertUser(UserDto userDto);
-    Boolean checkUser(LoginUserDto loginUserDto);
+    int insertUser(UserDto userDto);
+    UserDto checkUser(LoginUserDto loginUserDto);
     void insertUserNeighbor(UserNeighborDto userNeighborDto);
 
 }
