@@ -13,9 +13,7 @@
 		, account
 		, phone
     </sql>
-    <!-- parameterType: 쿼리 실행에 필요한 parameter 타입 지정
-         resultType: 쿼리 실행 결과를 매핑할 타입
-         #{}: 전달받은 parameter 값-->
+
     <insert id="insertUser" parameterType="UserDto">
         INSERT INTO user (
         <include refid="userColumns" />
@@ -27,13 +25,17 @@
         , #{account}
         , #{phone}
         )
+        <selectKey keyProperty="u_id" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
-    <select id="checkUser" parameterType="UserDto" resultType="LoginUserDto">
-        SELECT phone, pw FROM user WHERE phone=#{phone} and pw=#{pw}
+    <select id="checkUser" parameterType="LoginUserDto" resultType="UserDto">
+        SELECT * FROM user WHERE phone=#{phone} and pw=#{pw}
     </select>
 
     <update id="insertUserNeighbor" parameterType="UserNeighborDto">
         UPDATE user SET u_x=#{u_x}, u_y=#{u_y}, road_address=#{road_address}, address=#{address} WHERE u_id=#{u_id};
     </update>
+
 </mapper>

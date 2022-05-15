@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-    public void insertUser(UserDto userDto);
+    public int insertUser(UserDto userDto);
 
-    public LoginUserDto checkUser(LoginUserDto loginUserDto);
+    public UserDto checkUser(LoginUserDto loginUserDto);
     public void insertUserNeighbor(UserNeighborDto userNeighborDto);
 }
