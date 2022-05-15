@@ -115,7 +115,7 @@ public class PostController {
     public DetailPostDto getDetailPost(@RequestParam int pId){ return postService.getDetailPost(pId);}
 
     @PostMapping("/chat")
-    public CategoryPlaceDto setNanumPlace(@@RequestBody Map<String, String> param) throws JSONException {
+    public CategoryPlaceDto setNanumPlace(@RequestBody Map<String, String> param) throws JSONException {
         int pId = Integer.parseInt(param.get("pId"));;
         ArrayList<Double> center;
         List<NanumMemberPosDto> nanumMemberPosDtoList;
