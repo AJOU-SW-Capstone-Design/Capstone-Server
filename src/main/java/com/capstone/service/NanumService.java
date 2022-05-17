@@ -1,15 +1,13 @@
 package com.capstone.service;
 
-import com.capstone.dto.CategoryPlaceDto;
-import com.capstone.dto.NanumMemberDto;
-import com.capstone.dto.NanumMemberPosDto;
+import com.capstone.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface NanumService {
     //나눔 멤버 리스트 조회
-    List<NanumMemberDto> getAllNanumMembers(int pId);
+    List<UserDto> getAllNanumMembers(int pId);
 
     //나눔 멤버들의 위치 좌표 조희
     List<NanumMemberPosDto> getNanumMembersPos(int pId);
@@ -25,5 +23,9 @@ public interface NanumService {
     
     //나눔 위치 선정
     CategoryPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<CategoryPlaceDto> categoryPlaceDtos);
+
+    //전체 멤버 주문서 조회
+    List<OrdersDto> getNanumOrders(int pId);
+
 
 }
