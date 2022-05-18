@@ -133,8 +133,28 @@
         select * from orders where p_id=#{p_id} and u_id=#{u_id};
     </select>
 
-    <select id="getTotalFee" parameterType="int" resultType="HashMap">
+    <select id="getTotalFee" parameterType="int" resultType="int">
         select total_fee from post where p_id=#{pId};
+    </select>
+
+    <select id="getUserFee" parameterType="HashMap" resultType="int">
+        select fee from orders where p_id=#{pId} and u_id=#{uId};
+    </select>
+
+    <select id="getUserMenuPrice" parameterType="HashMap" resultType="int">
+        select price from orders where p_id=#{pId} and u_id=#{uId};
+    </select>
+
+    <select id="getUserPoint" parameterType="int" resultType="int">
+        select point from user where u_id=#{uId};
+    </select>
+
+    <update id="updateUserPoint" parameterType="HashMap">
+        update user set point=#{resultFee} where u_id=#{uId};
+    </update>
+
+    <select id="getUserInfo" parameterType="int" resultType="UserDto">
+        select * from user where u_id=#{uId};
     </select>
 
 </mapper>
