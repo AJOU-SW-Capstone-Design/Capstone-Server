@@ -1,11 +1,7 @@
 package com.capstone.service;
 
 import com.capstone.configuration.properties.KakaoProperties;
-import com.capstone.dto.CategoryPlaceDto;
-import com.capstone.dto.NanumMemberDto;
-import com.capstone.dto.NanumMemberPosDto;
-import com.capstone.dto.PostDto;
-import com.capstone.dto.UserPlaceDto;
+import com.capstone.dto.*;
 import com.capstone.mapper.NanumMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +44,7 @@ public class NanumServiceImpl {
         this.kakaoProperties = kakaoProperties;
     }
 
-    public List<NanumMemberDto> getAllNanumMembers(int pId){ return nanumMapper.getAllNanumMembers(pId);}
+    public List<UserDto> getAllNanumMembers(int pId){ return nanumMapper.getAllNanumMembers(pId);}
 
     public List<NanumMemberPosDto> getNanumMembersPos(int pId){ return nanumMapper.getNanumMembersPos(pId);}
 
@@ -192,4 +188,6 @@ public class NanumServiceImpl {
         }
         return categoryPlaceDtos.get(min_index);
     };
+
+    public List<OrdersDto> getNanumOrders(int pId){ return nanumMapper.getNanumOrders(pId);}
 }

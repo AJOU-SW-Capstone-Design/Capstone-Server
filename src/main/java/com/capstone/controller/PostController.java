@@ -183,4 +183,16 @@ public class PostController {
         return postService.getNanumMemberPos(pId);
     }
 
+    @GetMapping("/chat/orders")
+    public List<OrdersDto> getNanumOrders(@RequestParam int pId){
+        return nanumService.getNanumOrders(pId);
+
+    }
+
+    @GetMapping("/chat/members")
+    public List<UserDto> getAllNanumMembers(@RequestParam int pId){
+        return nanumService.getAllNanumMembers(pId);
+    }
+
+
 }

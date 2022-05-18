@@ -136,4 +136,5 @@
     <select id="getTotalFee" parameterType="int" resultType="HashMap">
         select total_fee from post where p_id=#{pId};
     </select>
+
 </mapper>
