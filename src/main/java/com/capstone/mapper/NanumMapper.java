@@ -1,6 +1,5 @@
 package com.capstone.mapper;
 
-import com.capstone.dto.NanumMemberDto;
 import com.capstone.dto.NanumMemberPosDto;
 import com.capstone.dto.OrdersDto;
 import com.capstone.dto.UserDto;

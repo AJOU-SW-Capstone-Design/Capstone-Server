@@ -76,7 +76,17 @@ public class PostServiceImpl {
 
     public OrdersDto getOrdersDto(OrdersDto ordersDto){ return postMapper.getOrdersDto(ordersDto);}
 
-    public HashMap<String, Object> getTotalFee(int pId){return postMapper.getTotalFee(pId);}
+    public int getTotalFee(int pId){return postMapper.getTotalFee(pId);}
+
+    public int getUserFee(HashMap<String, Object> ordersInfo){return postMapper.getUserFee(ordersInfo);}
+
+    public int getUserMenuPrice(HashMap<String, Object> ordersInfo){return postMapper.getUserMenuPrice(ordersInfo);}
+
+    public int getUserPoint(int uId){ return postMapper.getUserPoint(uId);}
+
+    public void updateUserPoint(HashMap<String, Object> nanumMemberInfo){postMapper.updateUserPoint(nanumMemberInfo);}
+
+    public UserDto getUserInfo(int uId) {return postMapper.getUserInfo(uId);}
     ;
 }
 
