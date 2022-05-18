@@ -33,4 +33,6 @@ public interface PostMapper {
     public List<RestaurantDto> getSearchRestaurantList(String searchKeyword);
     public RestaurantDto getSearchRestaurant(int rId);
     public List<NanumMemberPosDto> getNanumMemberPos(int pId);
+    public OrdersDto getOrdersDto(OrdersDto ordersDto);
+    public HashMap<String, Object> getTotalFee(int pId);
 }
