@@ -97,7 +97,7 @@ public class PostController {
             }
         }
 
-        return ordersDto;
+        return postService.getOrdersDto(ordersDto);
     }
 
     @GetMapping("/post")
@@ -166,11 +166,16 @@ public class PostController {
     }
 
     @PutMapping("/chat")
-    public void setShooting(@RequestBody ShootingInfoDto shootingInfoDto) {
+    public HashMap<String, Object>  setShooting(@RequestBody ShootingInfoDto shootingInfoDto) {
         //내가 쏜다 기능
         postService.updateShootingPost(shootingInfoDto);                    //post 테이블 업데이트
         postService.updateShootingOrders(shootingInfoDto.getP_id());        //orders 테이블 업데이트 - shooting_user가 아닌 참여자들의 fee를 0으로
         postService.updateShootingUserOrders(shootingInfoDto.getP_id());    //orders 테이블 업데이트 - shooting_user인 참여자의 fee를 total_fee로
+
+        HashMap<String, Object> ResponseHashMap = new HashMap<String, Object>();
+        ResponseHashMap.put("uId", shootingInfoDto.getU_id());
+        ResponseHashMap.put("total_fee", postService.getTotalFee(shootingInfoDto.getP_id()));
+        return ResponseHashMap;
     }
 
     @GetMapping("/chat")

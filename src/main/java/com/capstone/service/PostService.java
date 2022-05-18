@@ -32,4 +32,6 @@ public interface PostService {
     List<RestaurantDto> getSearchRestaurantList(String searchKeyword);
     RestaurantDto getSearchRestaurant(int rId);
     List<NanumMemberPosDto> getNanumMemberPos(int pId);
+    OrdersDto getOrdersDto(OrdersDto ordersDto);
+    HashMap<String, Object> getTotalFee(int pId);
 }

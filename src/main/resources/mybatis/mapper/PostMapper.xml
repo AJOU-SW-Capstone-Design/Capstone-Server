@@ -39,7 +39,7 @@
     </insert>
 
     <select id="searchPost" parameterType="String" resultType="MainPostDto">
-        select * from (select title, r_name, order_time, category, min_price from post left join restaurant on post.r_id=restaurant.r_id where post.done=0)A where title like CONCAT('%',#{keyword},'%') or r_name like CONCAT('%',#{keyword},'%');
+        select * from (select title, r_name, order_time, category, min_price from post left join restaurant on post.r_id=restaurant.r_id and post.done=0)A where title like CONCAT('%',#{keyword},'%') or r_name like CONCAT('%',#{keyword},'%');
     </select>
 
     <select id="getDetailPost" parameterType="int" resultType="DetailPostDto">
@@ -127,6 +127,14 @@
 
     <select id="getNanumMemberPos" parameterType="int" resultType="NanumMemberPosDto">
         select orders.p_id, orders.u_id, u_x, u_y from orders, user where p_id=#{pId} and user.u_id=orders.u_id;
+    </select>
+
+    <select id="getOrdersDto" parameterType="OrdersDto" resultType="OrdersDto">
+        select * from orders where p_id=#{p_id} and u_id=#{u_id};
+    </select>
+
+    <select id="getTotalFee" parameterType="int" resultType="HashMap">
+        select total_fee from post where p_id=#{pId};
     </select>
 
 </mapper>

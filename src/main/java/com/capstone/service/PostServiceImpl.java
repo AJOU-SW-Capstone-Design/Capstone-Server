@@ -73,6 +73,10 @@ public class PostServiceImpl {
     public RestaurantDto getSearchRestaurant(int rId){ return postMapper.getSearchRestaurant(rId);}
 
     public List<NanumMemberPosDto> getNanumMemberPos(int pId){ return postMapper.getNanumMemberPos(pId);}
+
+    public OrdersDto getOrdersDto(OrdersDto ordersDto){ return postMapper.getOrdersDto(ordersDto);}
+
+    public HashMap<String, Object> getTotalFee(int pId){return postMapper.getTotalFee(pId);}
     ;
 }
 
