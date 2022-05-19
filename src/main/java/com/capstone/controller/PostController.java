@@ -195,4 +195,9 @@ public class PostController {
     }
 
 
+    @PostMapping("/test/main")
+    public List<MainPostDto> getPostAllNeighbor(@RequestBody UserPosDto userPosDto) {
+        return postService.getPostAllNeighbor(userPosDto.getU_x(), userPosDto.getU_y());
+    }
+
 }

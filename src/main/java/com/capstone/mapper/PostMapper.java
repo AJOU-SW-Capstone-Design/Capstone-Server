@@ -35,4 +35,5 @@ public interface PostMapper {
     public List<NanumMemberPosDto> getNanumMemberPos(int pId);
     public OrdersDto getOrdersDto(OrdersDto ordersDto);
     public HashMap<String, Object> getTotalFee(int pId);
+    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y);
 }

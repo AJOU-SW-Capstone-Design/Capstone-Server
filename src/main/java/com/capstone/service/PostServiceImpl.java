@@ -77,6 +77,9 @@ public class PostServiceImpl {
     public OrdersDto getOrdersDto(OrdersDto ordersDto){ return postMapper.getOrdersDto(ordersDto);}
 
     public HashMap<String, Object> getTotalFee(int pId){return postMapper.getTotalFee(pId);}
+
+    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y){ return postMapper.getPostAllNeighbor(u_x,u_y);};
+
     ;
 }
 

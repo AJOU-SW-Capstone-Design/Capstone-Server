@@ -34,4 +34,6 @@ public interface PostService {
     List<NanumMemberPosDto> getNanumMemberPos(int pId);
     OrdersDto getOrdersDto(OrdersDto ordersDto);
     HashMap<String, Object> getTotalFee(int pId);
+    List<MainPostDto> getPostAllNeighbor(int u_x, int u_y);
+
 }
