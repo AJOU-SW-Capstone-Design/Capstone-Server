@@ -190,4 +190,6 @@ public class NanumServiceImpl {
     };
 
     public List<OrdersDto> getNanumOrders(int pId){ return nanumMapper.getNanumOrders(pId);}
+
+    public void updateNanumOrders(OrdersDto ordersDto){nanumMapper.updateNanumOrders(ordersDto);}
 }

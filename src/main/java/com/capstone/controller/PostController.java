@@ -136,11 +136,11 @@ public class PostController {
         for(int i=0; i<memberListSize; i++){
             HashMap<String, Object> nanumMemberInfo = new HashMap<String, Object>();
             nanumMemberInfo.put("uId", nanumMemberPosDtoList.get(i).getU_id());
-            HashMap<String, Object> ordersInfo = new HashMap<String, Object>();
-            ordersInfo.put("pId", pId);
-            ordersInfo.put("uId", nanumMemberPosDtoList.get(i).getU_id());
-            int userFee = postService.getUserFee(ordersInfo);
-            int userMenuPrice = postService.getUserMenuPrice(ordersInfo);
+            HashMap<String, Object> orderInfo = new HashMap<String, Object>();
+            orderInfo.put("pId", pId);
+            orderInfo.put("uId", nanumMemberPosDtoList.get(i).getU_id());
+            int userFee = postService.getUserFee(orderInfo);
+            int userMenuPrice = postService.getUserMenuPrice(orderInfo);
             int userPoint = postService.getUserPoint(nanumMemberPosDtoList.get(i).getU_id());
             nanumMemberInfo.put("resultFee", userPoint - (userFee + userMenuPrice));
             postService.updateUserPoint(nanumMemberInfo);
@@ -224,7 +224,82 @@ public class PostController {
         return nanumService.getAllNanumMembers(pId);
     }
 
+    @PutMapping("/chat/orders")
+    public OrdersDto updateNanumOrders(@RequestBody OrdersDto ordersDto){
+        // 주문서 수정
+        HashMap<String, Object> userOrderInfo = new HashMap<String, Object>();
+        userOrderInfo.put("pId", ordersDto.getP_id());
+        userOrderInfo.put("uId", ordersDto.getU_id());
+        int prevPrice = postService.getUserMenuPrice(userOrderInfo);
+        int prevTotalFee = postService.getTotalFee(ordersDto.getP_id());
 
+        nanumService.updateNanumOrders(ordersDto);  //price, menu, request 업데이트
+
+        int tempPrice = postService.getUserMenuPrice(userOrderInfo);
+
+        ordersDto.setPrice(-prevPrice);
+        postService.updateTotalPoint(ordersDto);
+        ordersDto.setPrice(tempPrice);
+        postService.updateTotalPoint(ordersDto);    //total_point 업데이트
+
+        int totalPoint = postService.getTotalPoint(ordersDto.getP_id());
+        int totalFee = 0;
+        int userOrderFee = 0;   //현재 주문서 작성한 참여자가 내야할 배달비
+        //해당 나눔 게시글의 식당 배달비 정보 반환
+        String orderFee = postService.getOrderFee(ordersDto.getP_id());
+        String[] orderFeeList = orderFee.split("\\.");
+        int listSize = orderFeeList.length;
+        for(int i=0; i<listSize; i++){
+            String[] tmpOrderFee = orderFeeList[i].split(",");
+            int price = Integer.parseInt(tmpOrderFee[0].substring(1));  //주문금액
+            int fee = Integer.parseInt(tmpOrderFee[1].substring(0,tmpOrderFee[1].length()-1));     //배달비
+            if (totalPoint >= price) {
+                //모인 금액에 따른 현재 배달비(total_fee) 업데이트
+                HashMap<String, Object> totalFeeInfo = new HashMap<String, Object>();
+                totalFeeInfo.put("pId", ordersDto.getP_id());
+                totalFeeInfo.put("totalFee", fee);
+                totalFee = fee;
+                postService.updateTotalFee(totalFeeInfo);
+            }
+        }
+
+        if(prevTotalFee == totalFee)
+            return ordersDto;
+
+        //현재 나눔 참여시 내야할 배달비(postFee), 현재 각 나눔 참여자가 부담하는 배달비(userOrderFee) 업데이트
+        PostDto postDto = postService.getPostInfo(ordersDto.getP_id());
+        if(postDto.getShooting_user() != null)
+            postService.updateShootingPostFee(ordersDto.getP_id());     //shooting_user 있을 시 postFee 업데이트
+        else{
+            //postFee 업데이트
+            List<OrdersDto> ordersDtoList = postService.getUserList(ordersDto.getP_id());
+            int userNum = ordersDtoList.size();
+            userOrderFee = totalFee / userNum;
+            int postFee = totalFee / (userNum+1);
+            HashMap<String, Object> postFeeInfo = new HashMap<String, Object>();
+            postFeeInfo.put("pId", ordersDto.getP_id());
+            postFeeInfo.put("postFee", postFee);
+            postService.updatePostFee(postFeeInfo);
+
+            // userOrderFee 업데이트
+            List<Integer> postUserIdList = postService.getPostUserId(ordersDto.getP_id());  //해당 게시글에 참여한 사용자 목록
+            int postUserIdListSize = postUserIdList.size();
+            for(int i=0; i<postUserIdListSize; i++) {
+                HashMap<String, Object> userOrderFeeInfo = new HashMap<String, Object>();
+                userOrderFeeInfo.put("pId", ordersDto.getP_id());
+                userOrderFeeInfo.put("uId", postUserIdList.get(i));
+                userOrderFeeInfo.put("userOrderFee", userOrderFee);
+                postService.updateUserOrderFee(userOrderFeeInfo);
+            }
+        }
+        return ordersDto;
+    }
+
+    @GetMapping("/chat/fee")
+    public int getNanumInfo(@RequestBody HashMap<String, Object> orderInfo) {
+        //uId, pId로 현재 나의 배달비 반환
+        return postService.getUserFee(orderInfo);
+    }
     @PostMapping("/test/main")
     public List<MainPostDto> getPostAllNeighbor(@RequestBody UserPosDto userPosDto) {
         return postService.getPostAllNeighbor(userPosDto.getU_x(), userPosDto.getU_y());
