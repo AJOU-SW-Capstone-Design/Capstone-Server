@@ -34,6 +34,11 @@ public interface PostMapper {
     public RestaurantDto getSearchRestaurant(int rId);
     public List<NanumMemberPosDto> getNanumMemberPos(int pId);
     public OrdersDto getOrdersDto(OrdersDto ordersDto);
-    public HashMap<String, Object> getTotalFee(int pId);
+    public int getTotalFee(int pId);
+    public int getUserFee(HashMap<String, Object> ordersInfo);
+    public int getUserMenuPrice(HashMap<String, Object> ordersInfo);
+    public int getUserPoint(int uId);
+    public void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
+    public UserDto getUserInfo(int uId);
     public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y);
 }

@@ -130,6 +130,37 @@ public class PostController {
         if (nanumMemberPosDtoList.size()==0)
             return null;
 
+
+        //포인트 차감
+        int memberListSize = nanumMemberPosDtoList.size();
+        for(int i=0; i<memberListSize; i++){
+            HashMap<String, Object> nanumMemberInfo = new HashMap<String, Object>();
+            nanumMemberInfo.put("uId", nanumMemberPosDtoList.get(i).getU_id());
+            HashMap<String, Object> ordersInfo = new HashMap<String, Object>();
+            ordersInfo.put("pId", pId);
+            ordersInfo.put("uId", nanumMemberPosDtoList.get(i).getU_id());
+            int userFee = postService.getUserFee(ordersInfo);
+            int userMenuPrice = postService.getUserMenuPrice(ordersInfo);
+            int userPoint = postService.getUserPoint(nanumMemberPosDtoList.get(i).getU_id());
+            nanumMemberInfo.put("resultFee", userPoint - (userFee + userMenuPrice));
+            postService.updateUserPoint(nanumMemberInfo);
+        }
+
+        //멤버 한 명인 경우
+        if (nanumMemberPosDtoList.size()==1){
+            UserDto userDto = postService.getUserInfo(nanumMemberPosDtoList.get(0).getU_id());
+            CategoryPlaceDto categoryPlaceDto = new CategoryPlaceDto(
+                    userDto.getName() + " 사용자의 위치",
+                    "",
+                    userDto.getRoad_address(),
+                    "",
+                    userDto.getU_x(),
+                    userDto.getU_y(),
+                    0
+            );
+            return categoryPlaceDto;
+        }
+
         //shooting_user 있는 경우 > 나눔 위치 계산 X
         PostDto postDto = postService.getPostInfo(pId);
         if(postDto.getShooting_user() != null){
@@ -143,7 +174,6 @@ public class PostController {
                     shootingUserDto.getU_y(),
                     0
             );
-
             return categoryPlaceDto;
         }
 
@@ -162,6 +192,7 @@ public class PostController {
         nanumPlaceInfo.put("x", nanumPlace.getX());
         nanumPlaceInfo.put("y", nanumPlace.getY());
         postService.updateNanumPlace(nanumPlaceInfo);
+
         return nanumPlace;
     }
 
@@ -186,7 +217,6 @@ public class PostController {
     @GetMapping("/chat/orders")
     public List<OrdersDto> getNanumOrders(@RequestParam int pId){
         return nanumService.getNanumOrders(pId);
-
     }
 
     @GetMapping("/chat/members")

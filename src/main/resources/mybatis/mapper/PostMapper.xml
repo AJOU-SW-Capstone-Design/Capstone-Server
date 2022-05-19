@@ -143,7 +143,7 @@
         select * from orders where p_id=#{p_id} and u_id=#{u_id};
     </select>
 
-    <select id="getTotalFee" parameterType="int" resultType="HashMap">
+    <select id="getTotalFee" parameterType="int" resultType="int">
         select total_fee from post where p_id=#{pId};
     </select>
     
@@ -152,6 +152,26 @@
         +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
         from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id
         having distance between 0 and 0.3;
+    </select>
+
+    <select id="getUserFee" parameterType="HashMap" resultType="int">
+        select fee from orders where p_id=#{pId} and u_id=#{uId};
+    </select>
+
+    <select id="getUserMenuPrice" parameterType="HashMap" resultType="int">
+        select price from orders where p_id=#{pId} and u_id=#{uId};
+    </select>
+
+    <select id="getUserPoint" parameterType="int" resultType="int">
+        select point from user where u_id=#{uId};
+    </select>
+
+    <update id="updateUserPoint" parameterType="HashMap">
+        update user set point=#{resultFee} where u_id=#{uId};
+    </update>
+
+    <select id="getUserInfo" parameterType="int" resultType="UserDto">
+        select * from user where u_id=#{uId};
     </select>
 
 </mapper>

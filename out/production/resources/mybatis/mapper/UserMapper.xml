@@ -35,7 +35,7 @@
     </select>
 
     <update id="insertUserNeighbor" parameterType="UserNeighborDto">
-        UPDATE user SET u_x=#{u_y}, u_y=#{u_x}, road_address=#{road_address}, address=#{address} WHERE u_id=#{u_id};
+        UPDATE user SET u_x=#{u_x}, u_y=#{u_y}, road_address=#{road_address}, address=#{address} WHERE u_id=#{u_id};
     </update>
 
 </mapper>
