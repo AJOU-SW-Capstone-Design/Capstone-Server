@@ -13,6 +13,16 @@
 		, fee
     </sql>
 
+    <sql id="MainPostColumns">
+        p_id,
+        title,
+        r_name,
+        order_time,
+        category,
+        min_price,
+        post_fee
+    </sql>
+
     <select id="getPostCategory" parameterType="String" resultType="MainPostDto">
         select post.p_id, title, r_name, order_time, category, min_price, post_fee from post, restaurant where post.done=0 and post.r_id=restaurant.r_id and restaurant.category=#{category};
     </select>
@@ -135,6 +145,13 @@
 
     <select id="getTotalFee" parameterType="int" resultType="int">
         select total_fee from post where p_id=#{pId};
+    </select>
+    
+    <select id="getPostAllNeighbor" resultType="MainPostDto">
+        select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
+        +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
+        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id
+        having distance between 0 and 0.3;
     </select>
 
     <select id="getUserFee" parameterType="HashMap" resultType="int">

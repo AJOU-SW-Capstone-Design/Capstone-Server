@@ -40,4 +40,5 @@ public interface PostMapper {
     public int getUserPoint(int uId);
     public void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     public UserDto getUserInfo(int uId);
+    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y);
 }
