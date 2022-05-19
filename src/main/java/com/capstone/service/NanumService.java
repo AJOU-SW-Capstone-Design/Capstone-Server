@@ -27,5 +27,7 @@ public interface NanumService {
     //전체 멤버 주문서 조회
     List<OrdersDto> getNanumOrders(int pId);
 
+    //주문서 수정
+    void updateNanumOrders(OrdersDto ordersDto);
 
 }

@@ -2,8 +2,10 @@ package com.capstone.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class OrdersDto {
     private int u_id;
     private int p_id;
