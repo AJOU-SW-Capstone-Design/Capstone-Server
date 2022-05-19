@@ -41,4 +41,5 @@ public interface PostMapper {
     public void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     public UserDto getUserInfo(int uId);
     public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y);
+    public List<HashMap<String, Object>> getChatList(int uId);
 }

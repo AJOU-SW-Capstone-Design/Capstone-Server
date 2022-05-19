@@ -88,7 +88,9 @@ public class PostServiceImpl {
 
     public UserDto getUserInfo(int uId) {return postMapper.getUserInfo(uId);}
 
-    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y){ return postMapper.getPostAllNeighbor(u_x,u_y);};
+    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y){ return postMapper.getPostAllNeighbor(u_x,u_y);}
+
+    public List<HashMap<String, Object>> getChatList(int uId){ return postMapper.getChatList(uId);}
 
     ;
 }
