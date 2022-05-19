@@ -39,4 +39,6 @@ public interface PostService {
     int getUserPoint(int uId);
     void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     UserDto getUserInfo(int uId);
+    List<MainPostDto> getPostAllNeighbor(int u_x, int u_y);
+
 }

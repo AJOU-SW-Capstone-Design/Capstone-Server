@@ -87,6 +87,9 @@ public class PostServiceImpl {
     public void updateUserPoint(HashMap<String, Object> nanumMemberInfo){postMapper.updateUserPoint(nanumMemberInfo);}
 
     public UserDto getUserInfo(int uId) {return postMapper.getUserInfo(uId);}
+
+    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y){ return postMapper.getPostAllNeighbor(u_x,u_y);};
+
     ;
 }
 
