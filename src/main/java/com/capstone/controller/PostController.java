@@ -305,4 +305,10 @@ public class PostController {
         return postService.getPostAllNeighbor(userPosDto.getU_x(), userPosDto.getU_y());
     }
 
+    @GetMapping("/chat/list")
+    public List<HashMap<String, Object>> getChatList(@RequestBody Map<String, String> param) {
+        int uId = Integer.parseInt(param.get("uId"));
+        return postService.getChatList(uId);
+    }
+
 }
