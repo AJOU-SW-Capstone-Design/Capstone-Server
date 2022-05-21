@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl {
@@ -34,9 +35,17 @@ public class UserServiceImpl {
 
     public void insertUserNeighbor(UserNeighborDto userNeighborDto){userMapper.insertUserNeighbor(userNeighborDto);}
 
-    public void sendCertificationMessage(String phoneNumber, String certificationNum) {
+    public String sendCertificationMessage(String phoneNumber) {
         String api_key = "NCSSGVGDAUAGAT3W";
         String api_secret = "6IH1UPF3MYKG520ZRF1NRVGMLQ2GQQBX";
+
+        Random rand  = new Random();
+        String certificationNum = "";
+        for(int i=0; i<4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            certificationNum+=ran;
+        }
+
         Message coolsms = new Message(api_key, api_secret);
 
         HashMap<String, String> params = new HashMap<String, String>();
@@ -48,11 +57,11 @@ public class UserServiceImpl {
 
         try {
             JSONObject obj = (JSONObject) coolsms.send(params);
-            System.out.println(obj.toString());
         } catch (CoolsmsException e) {
             System.out.println(e.getMessage());
             System.out.println(e.getCode());
         }
+        return certificationNum;
 
     }
 }

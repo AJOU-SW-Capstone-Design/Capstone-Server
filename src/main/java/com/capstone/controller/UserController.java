@@ -33,15 +33,6 @@ public class UserController {
 
     @GetMapping("/signup/certification")
     public String sendCertificationMessage(@RequestParam String phoneNumber) {
-        Random rand  = new Random();
-        String certificationNum = "";
-        for(int i=0; i<4; i++) {
-            String ran = Integer.toString(rand.nextInt(10));
-            certificationNum+=ran;
-        }
-        System.out.println("수신자 번호 : " + phoneNumber);
-        System.out.println("인증번호 : " + certificationNum);
-        userService.sendCertificationMessage(phoneNumber,certificationNum);
-        return certificationNum;
+        return userService.sendCertificationMessage(phoneNumber);
     }
 }
