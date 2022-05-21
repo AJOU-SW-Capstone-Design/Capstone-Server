@@ -300,6 +300,7 @@ public class PostController {
         //uId, pId로 현재 나의 배달비 반환
         return postService.getUserFee(orderInfo);
     }
+    //300m 내의 게시물만 조회
     @PostMapping("/test/main")
     public List<MainPostDto> getPostAllNeighbor(@RequestBody UserPosDto userPosDto) {
         return postService.getPostAllNeighbor(userPosDto.getU_x(), userPosDto.getU_y());

@@ -16,4 +16,7 @@
         select * from orders where p_id=#{p_id};
     </select>
 
+    <update id="updateNanumOrders" parameterType="OrdersDto">
+        update orders set menu=#{menu}, price=#{price}, request=#{request} where p_id=#{p_id} and u_id=#{u_id};
+    </update>
 </mapper>
