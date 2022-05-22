@@ -7,6 +7,8 @@ import com.capstone.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Random;
+
 @RestController
 public class UserController {
     @Autowired
@@ -27,5 +29,10 @@ public class UserController {
     @PutMapping("/neighbor")
     public void insertUserNeighbor(@RequestBody UserNeighborDto userNeighborDto){
         userService.insertUserNeighbor(userNeighborDto);
+    }
+
+    @GetMapping("/signup/certification")
+    public String sendCertificationMessage(@RequestParam String phoneNumber) {
+        return userService.sendCertificationMessage(phoneNumber);
     }
 }
