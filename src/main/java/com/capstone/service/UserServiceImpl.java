@@ -8,6 +8,7 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,6 +18,13 @@ import java.util.Random;
 public class UserServiceImpl {
     @Autowired
     private final UserMapper userMapper;
+
+    @Value("${coolsms.api-key}")
+    private String api_key;
+
+    @Value("${coolsms.api-secret}")
+    private String api_secret;
+
     public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
@@ -36,9 +44,6 @@ public class UserServiceImpl {
     public void insertUserNeighbor(UserNeighborDto userNeighborDto){userMapper.insertUserNeighbor(userNeighborDto);}
 
     public String sendCertificationMessage(String phoneNumber) {
-        String api_key = "NCSSGVGDAUAGAT3W";
-        String api_secret = "6IH1UPF3MYKG520ZRF1NRVGMLQ2GQQBX";
-
         Random rand  = new Random();
         String certificationNum = "";
         for(int i=0; i<4; i++) {
