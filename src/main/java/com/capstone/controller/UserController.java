@@ -7,6 +7,8 @@ import com.capstone.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Random;
+
 @RestController
 public class UserController {
     @Autowired
