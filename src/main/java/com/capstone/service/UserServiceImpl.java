@@ -30,7 +30,7 @@ public class UserServiceImpl {
     }
 
     public int insertUser(UserDto userDto) {
-       return userMapper.insertUser(userDto);
+        return userMapper.insertUser(userDto);
     }
 
     public UserDto checkUser(LoginUserDto loginUserDto) {
