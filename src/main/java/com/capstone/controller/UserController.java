@@ -28,4 +28,9 @@ public class UserController {
     public void insertUserNeighbor(@RequestBody UserNeighborDto userNeighborDto){
         userService.insertUserNeighbor(userNeighborDto);
     }
+
+    @GetMapping("/signup/certification")
+    public String sendCertificationMessage(@RequestParam String phoneNumber) {
+        return userService.sendCertificationMessage(phoneNumber);
+    }
 }

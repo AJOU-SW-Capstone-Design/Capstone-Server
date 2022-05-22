@@ -10,5 +10,6 @@ public interface UserService {
     int insertUser(UserDto userDto);
     UserDto checkUser(LoginUserDto loginUserDto);
     void insertUserNeighbor(UserNeighborDto userNeighborDto);
+    String sendCertificationMessage(String phoneNumber);
 
 }
