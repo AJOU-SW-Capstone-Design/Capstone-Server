@@ -302,8 +302,7 @@ public class PostController {
     }
 
     @GetMapping("/chat/list")
-    public List<HashMap<String, Object>> getChatList(@RequestBody Map<String, String> param) {
-        int uId = Integer.parseInt(param.get("uId"));
+    public List<HashMap<String, Object>> getChatList(@RequestParam int uId) {
         return postService.getChatList(uId);
     }
 
