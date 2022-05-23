@@ -26,7 +26,7 @@
     <select id="getPostCategory" parameterType="MainPageDto" resultType="MainPostDto">
         select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
         +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
-        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and category=#{category}
+        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and done=0 and category=#{category}
         having distance between 0 and 0.3;
     </select>
 
@@ -149,7 +149,7 @@
     <select id="getPostAll" parameterType="MainPageDto" resultType="MainPostDto">
         select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
         +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
-        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id
+        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and done=0
         having distance between 0 and 0.3;
     </select>
 
