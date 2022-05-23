@@ -1,5 +1,6 @@
 package com.capstone.mapper;
 
+import com.capstone.dto.BlameDto;
 import com.capstone.dto.NanumMemberPosDto;
 import com.capstone.dto.OrdersDto;
 import com.capstone.dto.UserDto;
@@ -12,4 +13,5 @@ public interface NanumMapper {
     public List<NanumMemberPosDto> getNanumMembersPos(int pId);
     public List<OrdersDto> getNanumOrders(int pId);
     public void updateNanumOrders(OrdersDto ordersDto);
+    public void blameUsers(BlameDto blameDto);
 }
