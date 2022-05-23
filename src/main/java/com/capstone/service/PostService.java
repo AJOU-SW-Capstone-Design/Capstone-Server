@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface PostService {
-    List<MainPostDto> getPostCategory(String category);
-    List<MainPostDto> getPostAll();
+    List<MainPostDto> getPostCategory(MainPageDto mainPageDto);
     void createPost(PostDto postDto);
     void createOrders(OrdersDto ordersDto);
     List<MainPostDto> searchPost(String keyword);
@@ -39,6 +38,6 @@ public interface PostService {
     int getUserPoint(int uId);
     void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     UserDto getUserInfo(int uId);
-    List<MainPostDto> getPostAllNeighbor(int u_x, int u_y);
+    List<MainPostDto> getPostAll(int u_x, int u_y);
     List<HashMap<String, Object>> getChatList(int uId);
 }
