@@ -3,7 +3,16 @@ package com.capstone.service;
 import com.capstone.dto.*;
 import com.capstone.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +21,11 @@ import java.util.List;
 public class PostServiceImpl {
     @Autowired
     private final PostMapper postMapper;
+
+    @Value("${imp_key}")
+    private String imp_key;
+    @Value("${imp_secret}")
+    private String imp_secret;
 
     public PostServiceImpl(PostMapper postMapper) {
         this.postMapper = postMapper;
@@ -88,6 +102,45 @@ public class PostServiceImpl {
 
     public List<HashMap<String, Object>> getChatList(int uId){ return postMapper.getChatList(uId);}
 
+    public void chargePoint(HashMap<String, Object> paymentInfo){
+        String impUid = (String) paymentInfo.get("imp_uid");
+        String merchantUid = (String) paymentInfo.get("merchant_uid");
+
+        //access token 발급
+        String url = "https://api.iamport.kr/users/getToken";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("imp_key", imp_key);
+        body.add("imp_secret", imp_secret);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
+        HttpEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+
+        System.out.println(response.toString());
+
+        //결제 정보 조회
+        /*
+        String access_token = response.getBody();
+        url = "https://api.iamport.kr/payments/" + impUid;
+
+        RestTemplate restTemplate2 = new RestTemplate();
+
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.add("Authorization", access_token);
+        HttpEntity request = new HttpEntity(headers2);
+
+        ResponseEntity<String> response2 = restTemplate.exchange(url, HttpMethod.GET, request, String.class );
+
+        String paymentData = response2.getBody();
+        */
+        //결제 검증
+
+    }
     ;
 }
 

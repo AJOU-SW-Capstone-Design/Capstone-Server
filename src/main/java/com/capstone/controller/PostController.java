@@ -306,4 +306,8 @@ public class PostController {
         return postService.getChatList(uId);
     }
 
+    @PostMapping("/payments/complete")
+    public void chargePoint(@RequestBody HashMap<String, Object> paymentInfo) {
+        postService.chargePoint(paymentInfo);
+    }
 }
