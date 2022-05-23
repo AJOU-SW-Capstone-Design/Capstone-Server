@@ -27,13 +27,13 @@ public class PostController {
     @Autowired
     private NanumServiceImpl nanumService;
 
-    @GetMapping("/main")
-    public List<MainPostDto> getPost(@RequestParam @Nullable String category){
+    @PostMapping("/main")
+    public List<MainPostDto> getPost(@RequestBody MainPageDto mainPageDto) {
         //category 별 post 분류(category가 있으면 not null이라고 가정)
-        if (category!=null)
-            return postService.getPostCategory(category);
+        if (mainPageDto.getCategory()!=null)
+            return postService.getPostCategory(mainPageDto);
         else
-            return postService.getPostAll();
+            return postService.getPostAll(mainPageDto);
     }
 
     @PostMapping("/post")
@@ -299,11 +299,6 @@ public class PostController {
     public int getNanumInfo(@RequestBody HashMap<String, Object> orderInfo) {
         //uId, pId로 현재 나의 배달비 반환
         return postService.getUserFee(orderInfo);
-    }
-    //300m 내의 게시물만 조회
-    @PostMapping("/test/main")
-    public List<MainPostDto> getPostAllNeighbor(@RequestBody UserPosDto userPosDto) {
-        return postService.getPostAllNeighbor(userPosDto.getU_x(), userPosDto.getU_y());
     }
 
     @GetMapping("/chat/list")

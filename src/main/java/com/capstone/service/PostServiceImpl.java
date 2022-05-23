@@ -18,12 +18,8 @@ public class PostServiceImpl {
     }
 
     //카테고리별 post 찾기
-    public List<MainPostDto> getPostCategory(String category) {
-        return postMapper.getPostCategory(category);
-    }
-
-    public List<MainPostDto> getPostAll() {
-        return postMapper.getPostAll();
+    public List<MainPostDto> getPostCategory(MainPageDto mainPageDto) {
+        return postMapper.getPostCategory(mainPageDto);
     }
 
     public void createPost(PostDto postDto) {
@@ -88,7 +84,7 @@ public class PostServiceImpl {
 
     public UserDto getUserInfo(int uId) {return postMapper.getUserInfo(uId);}
 
-    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y){ return postMapper.getPostAllNeighbor(u_x,u_y);}
+    public List<MainPostDto> getPostAll(MainPageDto mainPageDto){ return postMapper.getPostAll(mainPageDto);}
 
     public List<HashMap<String, Object>> getChatList(int uId){ return postMapper.getChatList(uId);}
 

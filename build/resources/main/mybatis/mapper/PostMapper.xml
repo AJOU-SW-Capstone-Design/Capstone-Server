@@ -23,12 +23,11 @@
         post_fee
     </sql>
 
-    <select id="getPostCategory" parameterType="String" resultType="MainPostDto">
-        select post.p_id, title, r_name, order_time, category, min_price, post_fee from post, restaurant where post.done=0 and post.r_id=restaurant.r_id and restaurant.category=#{category};
-    </select>
-
-    <select id="getPostAll" resultType="MainPostDto">
-        select post.p_id, title, r_name, order_time, category, min_price, post_fee from post, restaurant where post.done=0 and post.r_id=restaurant.r_id
+    <select id="getPostCategory" parameterType="MainPageDto" resultType="MainPostDto">
+        select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
+        +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
+        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and category=#{category}
+        having distance between 0 and 0.3;
     </select>
 
     <insert id="createPost" parameterType="PostDto" useGeneratedKeys="true" keyProperty="p_id">
@@ -147,7 +146,7 @@
         select total_fee from post where p_id=#{pId};
     </select>
     
-    <select id="getPostAllNeighbor" resultType="MainPostDto">
+    <select id="getPostAll" parameterType="MainPageDto" resultType="MainPostDto">
         select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
         +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
         from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id

@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    public List<MainPostDto> getPostCategory(String category);
-    public List<MainPostDto> getPostAll();
+    public List<MainPostDto> getPostCategory(MainPageDto mainPageDto);
+    public List<MainPostDto> getPostAll(MainPageDto mainPageDto);
     public void createPost(PostDto postDto);
     public void createOrders(OrdersDto ordersDto);
     public  List<MainPostDto> searchPost(String keyword);
@@ -40,6 +40,5 @@ public interface PostMapper {
     public int getUserPoint(int uId);
     public void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     public UserDto getUserInfo(int uId);
-    public List<MainPostDto> getPostAllNeighbor(double u_x, double u_y);
     public List<HashMap<String, Object>> getChatList(int uId);
 }
