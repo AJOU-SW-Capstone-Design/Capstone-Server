@@ -41,4 +41,6 @@ public interface PostMapper {
     public void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     public UserDto getUserInfo(int uId);
     public List<HashMap<String, Object>> getChatList(int uId);
+    public int chargePoint(HashMap<String, Object> paymentInfo);
+    public void chargeUserPoint(HashMap<String, Object> chargeInfo);
 }

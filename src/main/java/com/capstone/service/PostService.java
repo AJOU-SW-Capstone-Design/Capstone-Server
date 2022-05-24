@@ -40,4 +40,5 @@ public interface PostService {
     UserDto getUserInfo(int uId);
     List<MainPostDto> getPostAll(int u_x, int u_y);
     List<HashMap<String, Object>> getChatList(int uId);
+    int chargePoint(HashMap<String, Object> paymentInfo);
 }
