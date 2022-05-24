@@ -1,8 +1,10 @@
 package com.capstone.controller;
 
+import com.capstone.dto.BlameDto;
 import com.capstone.dto.LoginUserDto;
 import com.capstone.dto.UserDto;
 import com.capstone.dto.UserNeighborDto;
+import com.capstone.service.NanumServiceImpl;
 import com.capstone.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import java.util.Random;
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private NanumServiceImpl nanumService;
 
     @PutMapping("/signup")
     public int insertUser(@RequestBody UserDto userDto){
@@ -34,5 +39,10 @@ public class UserController {
     @GetMapping("/signup/certification")
     public String sendCertificationMessage(@RequestParam String phoneNumber) {
         return userService.sendCertificationMessage(phoneNumber);
+    }
+
+    @PostMapping("/chat/blame")
+    public void blameUsers(@RequestBody BlameDto blameDto){
+        nanumService.blameUsers(blameDto);
     }
 }

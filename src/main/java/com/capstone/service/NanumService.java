@@ -30,4 +30,5 @@ public interface NanumService {
     //주문서 수정
     void updateNanumOrders(OrdersDto ordersDto);
 
+    void blameUsers(BlameDto blameDto);
 }
