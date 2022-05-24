@@ -181,4 +181,7 @@
         update user set point=point+#{point} where u_id=#{uId};
     </update>
 
+    <select id="getChatListDetailInfo" parameterType="int" resultType="HashMap">
+        select title, total_fee from post where p_id=#{pId};
+    </select>
 </mapper>

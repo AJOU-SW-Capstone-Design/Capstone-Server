@@ -199,6 +199,8 @@ public class PostServiceImpl {
         return success;
         */
     }
+
+    public HashMap<String, Object> getChatListDetailInfo(int pId) {return postMapper.getChatListDetailInfo(pId);}
     ;
 }
 
