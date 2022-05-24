@@ -64,7 +64,7 @@ public class NanumServiceImpl {
         return center;
     };
 
-    public ArrayList<CategoryPlaceDto> getCategoryPlace(@RequestParam Double x, Double y) throws JSONException {
+    public ArrayList<CategoryPlaceDto> getCategoryPlace(@RequestParam double x, double y) throws JSONException {
         ArrayList<CategoryPlaceDto> categoryPlaceDtos = new ArrayList<>();
         String [] kakaoCategory={"CS2","FD6","CE7","SW8"};
         int totalPlaceNum=0;

@@ -5,7 +5,6 @@ import com.capstone.dto.UserDto;
 import com.capstone.dto.UserNeighborDto;
 import org.springframework.stereotype.Service;
 
-
 public interface UserService {
     int insertUser(UserDto userDto);
     UserDto checkUser(LoginUserDto loginUserDto);

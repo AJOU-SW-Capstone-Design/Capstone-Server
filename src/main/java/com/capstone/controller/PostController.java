@@ -2,6 +2,7 @@ package com.capstone.controller;
 
 import com.capstone.configuration.properties.KakaoProperties;
 import com.capstone.dto.*;
+import com.capstone.service.NanumService;
 import com.capstone.service.NanumServiceImpl;
 import com.capstone.service.PostService;
 import com.capstone.service.PostServiceImpl;

@@ -2,6 +2,7 @@ package com.capstone.service;
 
 import com.capstone.dto.*;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public interface PostService {
     int getUserPoint(int uId);
     void updateUserPoint(HashMap<String, Object> nanumMemberInfo);
     UserDto getUserInfo(int uId);
-    List<MainPostDto> getPostAll(int u_x, int u_y);
+    List<MainPostDto> getPostAll(MainPageDto mainPageDto);
     List<HashMap<String, Object>> getChatList(int uId);
     int chargePoint(HashMap<String, Object> paymentInfo);
     HashMap<String, Object> getChatListDetailInfo(int pId);

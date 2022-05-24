@@ -62,10 +62,6 @@
         update post set p_location_x=#{x}, p_location_y=#{y}  where p_id=#{pId};
     </update>
 
-    <select id="getNanumPlace" parameterType="int" resultType="CategoryPlaceDto">
-        select place_name, category_group_code, road_address_name, address_name, x, y, distance from
-    </select>
-
     <update id="updateShootingPost" parameterType="ShootingInfoDto">
         update post left join orders on orders.p_id=post.p_id left join user on orders.u_id=user.u_id set shooting_user=#{u_id}, p_location_x=user.u_x, p_location_y=user.u_y, post_fee=0 where post.p_id=#{p_id};
     </update>
