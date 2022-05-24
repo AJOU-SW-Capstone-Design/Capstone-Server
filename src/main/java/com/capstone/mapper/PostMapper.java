@@ -43,4 +43,5 @@ public interface PostMapper {
     public List<HashMap<String, Object>> getChatList(int uId);
     public int chargePoint(HashMap<String, Object> paymentInfo);
     public void chargeUserPoint(HashMap<String, Object> chargeInfo);
+    public HashMap<String, Object> getChatListDetailInfo(int pId);
 }

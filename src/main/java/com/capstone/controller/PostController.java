@@ -314,7 +314,7 @@ public class PostController {
         return postService.chargePoint(paymentInfo);
     }
 
-    @GetMapping("/payments/complete/member")
+    @GetMapping("/payments/complete/mobile")
     public String orderCompleteMobile(
             @RequestParam(required = false) String imp_uid
             , @RequestParam(required = false) String merchant_uid
@@ -323,6 +323,13 @@ public class PostController {
             , HttpSession session) throws IOException
     {
 
+        System.out.println("hi");
         return "home";
+    }
+
+    @GetMapping("/chat/list/detail")
+    public HashMap<String, Object> chatListDetailInfo (@RequestParam int pId) {
+        //title, 전체 배달비
+        return postService.getChatListDetailInfo(pId);
     }
 }
