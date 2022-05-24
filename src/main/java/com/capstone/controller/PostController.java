@@ -46,7 +46,7 @@ public class PostController {
     }
 
     @PutMapping("/post")
-    public OrdersDto createOrders(@RequestBody OrdersDto ordersDto){
+    public HashMap<String, Object> createOrders(@RequestBody OrdersDto ordersDto){
         postService.createOrders(ordersDto);
 
         //현재 모인 총 금액(total_point) 업데이트
@@ -100,7 +100,17 @@ public class PostController {
             }
         }
 
-        return postService.getOrdersDto(ordersDto);
+        OrdersDto ordersDto1 = postService.getOrdersDto(ordersDto);
+        HashMap<String, Object> ordersDtoAndFee = new HashMap<String, Object>();
+        ordersDtoAndFee.put("p_id", ordersDto1.getP_id());
+        ordersDtoAndFee.put("u_id", ordersDto1.getU_id());
+        ordersDtoAndFee.put("menu", ordersDto1.getMenu());
+        ordersDtoAndFee.put("price", ordersDto1.getPrice());
+        ordersDtoAndFee.put("request", ordersDto1.getRequest());
+        ordersDtoAndFee.put("fee", ordersDto1.getFee());
+        ordersDtoAndFee.put("total_fee", totalFee);
+
+        return ordersDtoAndFee;
     }
 
     @GetMapping("/post")
