@@ -26,7 +26,7 @@
     <select id="getPostCategory" parameterType="MainPageDto" resultType="MainPostDto">
         select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
         +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
-        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and category=#{category}
+        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and done=0 and category=#{category}
         having distance between 0 and 0.3;
     </select>
 
@@ -149,7 +149,7 @@
     <select id="getPostAll" parameterType="MainPageDto" resultType="MainPostDto">
         select <include refid="MainPostColumns" />, (6371*acos(cos(radians(#{u_y}))*cos(radians(u_y))*cos(radians(u_x)-radians(#{u_x}))
         +sin(radians(#{u_y}))*sin(radians(u_y)))) AS distance
-        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id
+        from post, user, restaurant where post.u_id=user.u_id and post.r_id=restaurant.r_id and done=0
         having distance between 0 and 0.3;
     </select>
 
@@ -174,7 +174,11 @@
     </select>
 
     <select id="getChatList" parameterType="int" resultType="HashMap">
-        select post.p_id, post.title from post, orders where post.p_id=orders.p_id and orders.u_id=#{uId};
+        select post.p_id, post.title from post, orders where post.done=0 and post.p_id=orders.p_id and orders.u_id=#{uId};
     </select>
+
+    <update id="chargeUserPoint" parameterType="HashMap">
+        update user set point=point+#{point} where u_id=#{uId};
+    </update>
 
 </mapper>

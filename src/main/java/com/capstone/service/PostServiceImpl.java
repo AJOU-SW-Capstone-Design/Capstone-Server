@@ -2,20 +2,29 @@ package com.capstone.service;
 
 import com.capstone.dto.*;
 import com.capstone.mapper.PostMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.coyote.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.*;
 
 @Service
 public class PostServiceImpl {
@@ -102,44 +111,93 @@ public class PostServiceImpl {
 
     public List<HashMap<String, Object>> getChatList(int uId){ return postMapper.getChatList(uId);}
 
-    public void chargePoint(HashMap<String, Object> paymentInfo){
+    private List<NameValuePair> convertParameter(Map<String,String> paramMap){
+        List<NameValuePair> paramList = new ArrayList<NameValuePair>();
+        Set<Map.Entry<String,String>> entries = paramMap.entrySet();
+        for(Map.Entry<String,String> entry : entries) {
+            paramList.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+        }
+        return paramList;
+    }
+
+    public int chargePoint(HashMap<String, Object> paymentInfo){
         String impUid = (String) paymentInfo.get("imp_uid");
         String merchantUid = (String) paymentInfo.get("merchant_uid");
 
         //access token 발급
         String url = "https://api.iamport.kr/users/getToken";
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("imp_key", imp_key);
-        body.add("imp_secret", imp_secret);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
-        HttpEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
-
-        System.out.println(response.toString());
+        String result = "";
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(url);
+        Map<String,String> m =new HashMap<String,String>();
+        m.put("imp_key", imp_key);
+        m.put("imp_secret", imp_secret);
+        try {
+            post.setEntity(new UrlEncodedFormEntity(convertParameter(m)));
+            HttpResponse res = client.execute(post);
+            ObjectMapper mapper = new ObjectMapper();
+            String body = EntityUtils.toString(res.getEntity());
+            JsonNode rootNode = mapper.readTree(body);
+            JsonNode resNode = rootNode.get("response");
+            result = resNode.get("access_token").asText();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //결제 정보 조회
-        /*
-        String access_token = response.getBody();
+        String access_token = result;
         url = "https://api.iamport.kr/payments/" + impUid;
 
-        RestTemplate restTemplate2 = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
 
-        HttpHeaders headers2 = new HttpHeaders();
-        headers2.add("Authorization", access_token);
-        HttpEntity request = new HttpEntity(headers2);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", access_token);
+        HttpEntity request = new HttpEntity(headers);
 
-        ResponseEntity<String> response2 = restTemplate.exchange(url, HttpMethod.GET, request, String.class );
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 
-        String paymentData = response2.getBody();
+        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONObject paymentData = jsonObject.getJSONObject("response");
+
+        System.out.println("paymentData = " + paymentData);
+
+        if(paymentData.get("status") == "failed")
+            return 0;
+
+        HashMap<String, Object> chargeInfo = new HashMap<String, Object>();
+        chargeInfo.put("uId", paymentInfo.get("uId"));
+        chargeInfo.put("point", paymentData.get("amount"));
+        postMapper.chargeUserPoint(chargeInfo);
+
+        return postMapper.getUserPoint((Integer) paymentInfo.get("uId"));
+        //결제 정보 저장
+        /*
+        HashMap<String, Object> chargeInfo = new HashMap<String, Object>();
+        chargeInfo.put("uId", paymentInfo.get("uId"));
+        chargeInfo.put("point", paymentData.);
+        postMapper.chargeUserPoint(chargeInfo);
+
+        boolean success = false;
+        String status = paymentData.;
+        switch (status) {
+            case "ready": // 가상계좌 발급
+                // DB에 가상계좌 발급 정보 저장
+                String vbankNum = paymentData.;
+                String vbankDate = paymentData.;
+                String vbankName = paymentData.;
+                HashMap<String, Object> vbankInfo = new HashMap<String, Object>();
+                vbankInfo.put("vbankNum", vbankNum);
+                vbankInfo.put("vbankDate", vbankDate);
+                vbankInfo.put("vbankName", vbankName);
+                postMapper.createVbank(vbankInfo);
+                break;
+            case "paid": // 결제 완료
+                success = true;
+                break;
+        }
+        return success;
         */
-        //결제 검증
-
     }
     ;
 }
