@@ -21,6 +21,6 @@
     </update>
 
     <insert id="blameUsers" parameterType="BlameDto">
-        insert into blame ( b_id, u_id, blamed_id, reason) values(NULL, #{u_id},#{blamed_id},#{reason});
+        insert into blame ( b_id, u_id, blamed_id) values(NULL, #{u_id},#{blamed_id});
     </insert>
 </mapper>
