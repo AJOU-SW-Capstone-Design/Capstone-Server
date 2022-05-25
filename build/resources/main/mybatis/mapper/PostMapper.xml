@@ -170,7 +170,7 @@
     </select>
 
     <select id="getChatList" parameterType="int" resultType="HashMap">
-        select post.p_id, post.title from post, orders where post.done=0 and post.p_id=orders.p_id and orders.u_id=#{uId};
+        select post.p_id, post.title from post, orders where post.p_id=orders.p_id and orders.u_id=#{uId};
     </select>
 
     <update id="chargeUserPoint" parameterType="HashMap">
