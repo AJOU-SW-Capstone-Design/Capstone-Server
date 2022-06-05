@@ -44,4 +44,13 @@ public interface PostMapper {
     public int chargePoint(HashMap<String, Object> paymentInfo);
     public void chargeUserPoint(HashMap<String, Object> chargeInfo);
     public HashMap<String, Object> getChatListDetailInfo(int pId);
+    public String getOrdererPhone(int pId);
+    public String getOrderUrl(int pId);
+    public List<HashMap> getOrderList(int pId);
+    public List<OrdersDto> getOrders(int pId);
+    public void updateOrders(OrdersDto ordersDto);
+    public void updateOrdersMenu(OrdersDto ordersDto);
+    public void updateOrdersPrice(OrdersDto ordersDto);
+    public double getPLocationX(int pId);
+    public double getPLocationY(int pId);
 }

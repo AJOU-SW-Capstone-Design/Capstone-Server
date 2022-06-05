@@ -155,6 +155,7 @@ public class NanumServiceImpl {
 
     public CategoryPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<CategoryPlaceDto> categoryPlaceDtos) {
         double min = Double.MAX_VALUE;
+        double min_average = Double.MAX_VALUE;
         int min_index = 0;
 
         int memberNum = nanumMemberPosDtoList.size();
@@ -175,6 +176,10 @@ public class NanumServiceImpl {
                 sum += walkingTimeList[k];
 
             double average = (double) (sum / memberNum);    // 사용자 - 대표장소 간 도보거리의 평균
+            if (min_average > average)
+                min_average = average;
+            if (abs(min_average - average) > 100)
+                continue;
             double sumOfDeviation = 0;
             for(int k = 0; k < memberNum; k++) {
                 double deviation = abs(average - walkingTimeList[k]);   // 편차
@@ -188,10 +193,6 @@ public class NanumServiceImpl {
         }
         return categoryPlaceDtos.get(min_index);
     };
-
-    public List<OrdersDto> getNanumOrders(int pId){ return nanumMapper.getNanumOrders(pId);}
-
-    public void updateNanumOrders(OrdersDto ordersDto){nanumMapper.updateNanumOrders(ordersDto);}
 
     public void blameUsers(BlameDto blameDto){nanumMapper.blameUsers(blameDto);}
 }

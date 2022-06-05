@@ -180,4 +180,41 @@
     <select id="getChatListDetailInfo" parameterType="int" resultType="HashMap">
         select title, total_fee from post where p_id=#{pId};
     </select>
+
+    <select id="getOrdererPhone" parameterType="int" resultType="String">
+        select user.phone from post, user where post.p_id=#{pId} and post.u_id=user.u_id;
+    </select>
+
+    <select id="getOrderUrl" parameterType="int" resultType="String">
+        select restaurant.order_url from post, restaurant where post.p_id=#{pId} and post.r_id=restaurant.r_id;
+    </select>
+
+    <select id="getOrderList" parameterType="int" resultType="HashMap">
+        select menu, price, request from orders where p_id=#{pId};
+    </select>
+
+    <select id="getOrders" parameterType="int" resultType="OrdersDto">
+        select * from orders where p_id=#{p_id};
+    </select>
+
+    <update id="updateOrders" parameterType="OrdersDto">
+        update orders set menu=#{menu}, price=#{price} where p_id=#{p_id} and u_id=#{u_id};
+    </update>
+
+    <update id="updateOrdersMenu" parameterType="OrdersDto">
+        update orders set menu=#{menu} where p_id=#{p_id} and u_id=#{u_id};
+    </update>
+
+    <update id="updateOrdersPrice" parameterType="OrdersDto">
+        update orders set price=#{price} where p_id=#{p_id} and u_id=#{u_id};
+    </update>
+
+    <select id="getPLocationX" parameterType="int" resultType="double">
+        select p_location_x from post where p_id=#{p_id};
+    </select>
+
+    <select id="getPLocationY" parameterType="int" resultType="double">
+        select p_location_y from post where p_id=#{p_id};
+    </select>
+
 </mapper>

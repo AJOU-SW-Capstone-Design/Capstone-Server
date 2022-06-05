@@ -12,14 +12,6 @@
         select p_id,user.u_id,u_x,u_y from user left join orders on user.u_id=orders.u_id where orders.p_id=#{p_id};
     </select>
 
-    <select id="getNanumOrders" parameterType="int" resultType="OrdersDto">
-        select * from orders where p_id=#{p_id};
-    </select>
-
-    <update id="updateNanumOrders" parameterType="OrdersDto">
-        update orders set menu=#{menu}, price=#{price}, request=#{request} where p_id=#{p_id} and u_id=#{u_id};
-    </update>
-
     <insert id="blameUsers" parameterType="BlameDto">
         insert into blame ( b_id, u_id, blamed_id) values(NULL, #{u_id},#{blamed_id});
     </insert>

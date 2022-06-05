@@ -43,4 +43,14 @@ public interface PostService {
     List<HashMap<String, Object>> getChatList(int uId);
     int chargePoint(HashMap<String, Object> paymentInfo);
     HashMap<String, Object> getChatListDetailInfo(int pId);
+    String getOrdererPhone(int pId);
+    String getOrderUrl(int pId);
+    List<HashMap> getOrderList(int pId);
+    List<OrdersDto> getOrders(int pId);         //전체 멤버 주문서 조회
+    void updateOrders(OrdersDto ordersDto);     //주문서 수정
+    void updateOrdersMenu(OrdersDto ordersDto);
+    void updateOrdersPrice(OrdersDto ordersDto);
+    double getPLocationX(int pId);
+    double getPLocationY(int pId);
+
 }
