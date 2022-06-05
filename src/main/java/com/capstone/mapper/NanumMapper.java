@@ -11,7 +11,5 @@ import java.util.List;
 public interface NanumMapper {
     public List<UserDto> getAllNanumMembers(int pId);
     public List<NanumMemberPosDto> getNanumMembersPos(int pId);
-    public List<OrdersDto> getNanumOrders(int pId);
-    public void updateNanumOrders(OrdersDto ordersDto);
     public void blameUsers(BlameDto blameDto);
 }

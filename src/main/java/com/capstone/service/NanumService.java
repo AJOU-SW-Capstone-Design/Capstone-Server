@@ -26,11 +26,5 @@ public interface NanumService {
     //나눔 위치 선정
     CategoryPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<CategoryPlaceDto> categoryPlaceDtos);
 
-    //전체 멤버 주문서 조회
-    List<OrdersDto> getNanumOrders(int pId);
-
-    //주문서 수정
-    void updateNanumOrders(OrdersDto ordersDto);
-
     void blameUsers(BlameDto blameDto);
 }

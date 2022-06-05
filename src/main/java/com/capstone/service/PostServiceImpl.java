@@ -201,6 +201,24 @@ public class PostServiceImpl {
     }
 
     public HashMap<String, Object> getChatListDetailInfo(int pId) {return postMapper.getChatListDetailInfo(pId);}
+
+    public String getOrdererPhone(int pId) {return postMapper.getOrdererPhone(pId);}
+
+    public String getOrderUrl(int pId) {return postMapper.getOrderUrl(pId);}
+
+    public List<HashMap> getOrderList(int pId) {return postMapper.getOrderList(pId);}
+
+    public List<OrdersDto> getOrders(int pId){ return postMapper.getOrders(pId);}
+
+    public void updateOrders(OrdersDto ordersDto){postMapper.updateOrders(ordersDto);}
+
+    public void updateOrdersMenu(OrdersDto ordersDto){postMapper.updateOrdersMenu(ordersDto);}
+
+    public void updateOrdersPrice(OrdersDto ordersDto){postMapper.updateOrdersPrice(ordersDto);}
+
+    public double getPLocationX(int pId){return postMapper.getPLocationX(pId);}
+
+    public double getPLocationY(int pId){return postMapper.getPLocationY(pId);}
     ;
 }
 
