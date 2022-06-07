@@ -1,5 +1,6 @@
 package com.capstone.service;
 
+import com.capstone.MyThread;
 import com.capstone.configuration.properties.KakaoProperties;
 import com.capstone.dto.*;
 import com.capstone.mapper.NanumMapper;
@@ -120,6 +121,7 @@ public class NanumServiceImpl {
         return categoryPlaceDtos;
     }
 
+    /*
     public int getWalkingTime(double startX, double startY, double endX, double endY){
         String url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result";
 
@@ -152,15 +154,23 @@ public class NanumServiceImpl {
 
         return totalTime;
     }
+    */
 
-    public CategoryPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<CategoryPlaceDto> categoryPlaceDtos) {
+    public CategoryPlaceDto setPlace(List<NanumMemberPosDto> nanumMemberPosDtoList, List<CategoryPlaceDto> categoryPlaceDtos) throws InterruptedException {
+        long start = System.currentTimeMillis();
+        int placeNum = categoryPlaceDtos.size();
+
+        double min = Double.MAX_VALUE;
+        double min_average = Double.MAX_VALUE;
+        int min_index = 0;
+
+        /*
         double min = Double.MAX_VALUE;
         double min_average = Double.MAX_VALUE;
         int min_index = 0;
 
         int memberNum = nanumMemberPosDtoList.size();
         int [] walkingTimeList = new int[memberNum];
-        int placeNum = categoryPlaceDtos.size();
 
         for(int i=0; i<placeNum; i++) {
             double x = categoryPlaceDtos.get(i).getX();
@@ -178,7 +188,7 @@ public class NanumServiceImpl {
             double average = (double) (sum / memberNum);    // 사용자 - 대표장소 간 도보거리의 평균
             if (min_average > average)
                 min_average = average;
-            if (abs(min_average - average) > 100)
+            if (abs(min_average - average) > 120)
                 continue;
             double sumOfDeviation = 0;
             for(int k = 0; k < memberNum; k++) {
@@ -191,6 +201,25 @@ public class NanumServiceImpl {
                 min_index = i;
             }
         }
+        */
+
+        int threadCount = 2;
+        MyThread[] threads = new MyThread[threadCount];
+        for(int i=0; i<threads.length; i++) {
+            threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key);
+            threads[i].start();
+        }
+        for(int i=0; i<threads.length; i++) {
+            threads[i].join();
+            if (min > threads[i].getResultMin()) {
+                min = threads[i].getResultMin();
+                min_index = threads[i].getResultMinIndex();
+            }
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("연산 시간: " + (end - start) + "ms");
+        System.out.println("min_index = " + min_index);
         return categoryPlaceDtos.get(min_index);
     };
 

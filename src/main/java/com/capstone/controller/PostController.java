@@ -304,7 +304,7 @@ public class PostController {
     }
 
     @PostMapping("/chat")
-    public HashMap<String, Object>  setNanumPlace(@RequestBody Map<String, String> param) throws JSONException {
+    public HashMap<String, Object>  setNanumPlace(@RequestBody Map<String, String> param) throws JSONException, InterruptedException {
         int pId = Integer.parseInt(param.get("pId"));;
         ArrayList<Double> center;
         List<NanumMemberPosDto> nanumMemberPosDtoList;
