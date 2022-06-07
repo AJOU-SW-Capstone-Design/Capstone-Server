@@ -37,8 +37,12 @@ public class NanumServiceImpl {
 
     private final KakaoProperties kakaoProperties;
 
-    @Value("${tmap.api-key}")
-    private String key;
+    @Value("${tmap.api-key3}")
+    private String key3;
+    @Value("${tmap.api-key4}")
+    private String key4;
+    @Value("${tmap.api-key5}")
+    private String key5;
 
     public NanumServiceImpl(NanumMapper nanumMapper, KakaoProperties kakaoProperties) {
         this.nanumMapper = nanumMapper;
@@ -203,10 +207,16 @@ public class NanumServiceImpl {
         }
         */
 
-        int threadCount = 2;
+        int threadCount = 3;
         MyThread[] threads = new MyThread[threadCount];
         for(int i=0; i<threads.length; i++) {
-            threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key);
+            if(i%3 == 0)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key3);
+            else if(i%3 == 1)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key4);
+            else if(i%3 == 2)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key5);
+
             threads[i].start();
         }
         for(int i=0; i<threads.length; i++) {
