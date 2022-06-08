@@ -34,7 +34,6 @@ import static java.lang.Math.abs;
 public class NanumServiceImpl {
     @Autowired
     private final NanumMapper nanumMapper;
-
     private final KakaoProperties kakaoProperties;
 
     @Value("${tmap.api-key3}")
@@ -43,6 +42,20 @@ public class NanumServiceImpl {
     private String key4;
     @Value("${tmap.api-key5}")
     private String key5;
+    @Value("${tmap.api-key6}")
+    private String key6;
+    @Value("${tmap.api-key7}")
+    private String key7;
+    @Value("${tmap.api-key8}")
+    private String key8;
+    @Value("${tmap.api-key9}")
+    private String key9;
+    @Value("${tmap.api-key10}")
+    private String key10;
+    @Value("${tmap.api-key11}")
+    private String key11;
+    @Value("${tmap.api-key12}")
+    private String key12;
 
     public NanumServiceImpl(NanumMapper nanumMapper, KakaoProperties kakaoProperties) {
         this.nanumMapper = nanumMapper;
@@ -207,15 +220,29 @@ public class NanumServiceImpl {
         }
         */
 
-        int threadCount = 3;
+        int threadCount = 10;
         MyThread[] threads = new MyThread[threadCount];
         for(int i=0; i<threads.length; i++) {
-            if(i%3 == 0)
+            if(i%10 == 0)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key3);
-            else if(i%3 == 1)
+            else if(i%10 == 1)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key4);
-            else if(i%3 == 2)
+            else if(i%10 == 2)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key5);
+            else if(i%10 == 3)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key6);
+            else if(i%10 == 4)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key7);
+            else if(i%10 == 5)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key8);
+            else if(i%10 == 6)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key9);
+            else if(i%10 == 7)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key10);
+            else if(i%10 == 8)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key11);
+            else if(i%10 == 9)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key12);
 
             threads[i].start();
         }

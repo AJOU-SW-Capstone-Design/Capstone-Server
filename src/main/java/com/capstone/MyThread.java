@@ -76,7 +76,7 @@ public class MyThread extends Thread{
         int [] walkingTimeList = new int[memberNum];
 
         for(int i = start; i <= end; i++) {
-            System.out.println("몇 번째: " + i);
+            //System.out.println("몇 번째: " + i);
             double x = categoryPlaceDtos.get(i).getX();
             double y = categoryPlaceDtos.get(i).getY();
             for (int j = 0; j < memberNum; j++) {
