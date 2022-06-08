@@ -220,28 +220,40 @@ public class NanumServiceImpl {
         }
         */
 
-        int threadCount = 10;
+        int threadCount = 16;
         MyThread[] threads = new MyThread[threadCount];
         for(int i=0; i<threads.length; i++) {
-            if(i%10 == 0)
+            if(i%16 == 0)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key3);
-            else if(i%10 == 1)
+            else if(i%16 == 1)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key4);
-            else if(i%10 == 2)
+            else if(i%16 == 2)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key5);
-            else if(i%10 == 3)
+            else if(i%16 == 3)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key6);
-            else if(i%10 == 4)
+            else if(i%16 == 4)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key7);
-            else if(i%10 == 5)
+            else if(i%16 == 5)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key8);
-            else if(i%10 == 6)
+            else if(i%16 == 6)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key9);
-            else if(i%10 == 7)
+            else if(i%16 == 7)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key10);
-            else if(i%10 == 8)
+            else if(i%16 == 8)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key11);
-            else if(i%10 == 9)
+            else if(i%16 == 9)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key12);
+            else if(i%16 == 10)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key7);
+            else if(i%16 == 11)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key8);
+            else if(i%16 == 12)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key9);
+            else if(i%16 == 13)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key10);
+            else if(i%16 == 14)
+                threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key11);
+            else if(i%16 == 15)
                 threads[i] = new MyThread(i*(placeNum/threadCount), (i+1)*(placeNum/threadCount)-1, nanumMemberPosDtoList, categoryPlaceDtos, key12);
 
             threads[i].start();
