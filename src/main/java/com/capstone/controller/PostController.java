@@ -356,7 +356,8 @@ public class PostController {
                 orderList += orderListHashMap.get(i).toString();
                 orderList += " AND ";
             }
-            boolean success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
+            boolean success = false;
+//            success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
             HashMap<String, Object> placeAndSuccessInfo = new HashMap<String, Object>();
             placeAndSuccessInfo.put("nanumPlace", categoryPlaceDto);
             placeAndSuccessInfo.put("success", success);
@@ -387,7 +388,8 @@ public class PostController {
                 orderList += orderListHashMap.get(i).toString();
                 orderList += " AND ";
             }
-            boolean success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
+            boolean success = false;
+            //success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
             HashMap<String, Object> placeAndSuccessInfo = new HashMap<String, Object>();
             placeAndSuccessInfo.put("nanumPlace", categoryPlaceDto);
             placeAndSuccessInfo.put("success", success);
@@ -430,7 +432,8 @@ public class PostController {
             orderList += " AND ";
         }
 
-        boolean success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
+        boolean success = false;
+//        success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
 
         HashMap<String, Object> placeAndSuccessInfo = new HashMap<String, Object>();
         placeAndSuccessInfo.put("nanumPlace", nanumPlace);

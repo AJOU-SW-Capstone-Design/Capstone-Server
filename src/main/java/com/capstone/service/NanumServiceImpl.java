@@ -219,7 +219,6 @@ public class NanumServiceImpl {
             }
         }
         */
-
         int threadCount = 16;
         MyThread[] threads = new MyThread[threadCount];
         for(int i=0; i<threads.length; i++) {
@@ -258,8 +257,13 @@ public class NanumServiceImpl {
 
             threads[i].start();
         }
+
         for(int i=0; i<threads.length; i++) {
             threads[i].join();
+            if (min_average > threads[i].getResultMinAverage())
+                min_average = threads[i].getResultMinAverage();
+            if (abs(min_average - threads[i].getResultMinAverage()) > 60)
+                continue;
             if (min > threads[i].getResultMin()) {
                 min = threads[i].getResultMin();
                 min_index = threads[i].getResultMinIndex();

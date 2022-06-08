@@ -21,6 +21,7 @@ public class MyThread extends Thread{
     private List<NanumMemberPosDto> nanumMemberPosDtoList;
     private List<CategoryPlaceDto> categoryPlaceDtos;
 
+    private double resultMinAverage;
     private double resultMin;
     private int resultMinIndex;
 
@@ -76,7 +77,7 @@ public class MyThread extends Thread{
         int [] walkingTimeList = new int[memberNum];
 
         for(int i = start; i <= end; i++) {
-            //System.out.println("몇 번째: " + i);
+            System.out.println("몇 번째: " + i);
             double x = categoryPlaceDtos.get(i).getX();
             double y = categoryPlaceDtos.get(i).getY();
             for (int j = 0; j < memberNum; j++) {
@@ -92,7 +93,7 @@ public class MyThread extends Thread{
             double average = (double) (sum / memberNum);    // 사용자 - 대표장소 간 도보거리의 평균
             if (min_average > average)
                 min_average = average;
-            if (abs(min_average - average) > 100)
+            if (abs(min_average - average) > 60)
                 continue;
             double sumOfDeviation = 0;
             for(int k = 0; k < memberNum; k++) {
@@ -105,8 +106,13 @@ public class MyThread extends Thread{
                 min_index = i;
             }
         }
+        resultMinAverage = min_average;
         resultMin = min;
         resultMinIndex = min_index;
+    }
+
+    public double getResultMinAverage(){
+        return this.resultMinAverage;
     }
     public double getResultMin(){
         return this.resultMin;
