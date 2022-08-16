@@ -1,30 +1,12 @@
 package com.capstone.controller;
 
-import com.capstone.configuration.properties.KakaoProperties;
 import com.capstone.dto.*;
-import com.capstone.service.NanumService;
 import com.capstone.service.NanumServiceImpl;
-import com.capstone.service.PostService;
 import com.capstone.service.PostServiceImpl;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.maven.model.Model;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.lang.Nullable;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 
 import javax.servlet.http.HttpSession;
@@ -412,14 +394,6 @@ public class PostController {
         nanumPlaceInfo.put("x", nanumPlace.getX());
         nanumPlaceInfo.put("y", nanumPlace.getY());
         postService.updateNanumPlace(nanumPlaceInfo);
-        
-        // flask 코드 부르기
-//        테스트 데이터
-//        String plRoadAddress = "경기 수원시 팔달구 권광로340번길 79";
-//        String plName = "GS25 우만파크점 앞";
-//        String ordererPhone = "01041236951";
-//        String orderUrl = "https://www.yogiyo.co.kr/mobile/#/452810/";
-//        String orderList = "{request=, price=6100, menu=1리터보틀봉내.아메리카노} AND {request=사과잼 빼고 주세요, price=3500, menu=아메리칸애플생크림와플} AND {request=4등분 해주세요, price=5500, menu=카야버터 토스트} AND ";
 
         String plRoadAddress = nanumPlace.getAddress_name();
         String plName = nanumPlace.getPlace_name() + " 앞";
@@ -577,7 +551,6 @@ public class PostController {
             , HttpSession session) throws IOException
     {
 
-        System.out.println("hi");
         return "home";
     }
 
@@ -597,13 +570,6 @@ public class PostController {
 
     @GetMapping("/test/flask")
     public void flaskTest2() {
-        String UrlData = "http://3.39.125.17:5000/autoOrder";
-//        String plRoadAddress = "경기 수원시 팔달구 권광로340번길 79";
-//        String plName = "GS25 우만파크점 앞";
-//        String ordererPhone = "01041236951";
-//        String orderUrl = "https://www.yogiyo.co.kr/mobile/#/452810/";
-//        String orderList = "{request=, price=6100, menu=1리터보틀봉내.아메리카노} AND {request=사과잼 빼고 주세요, price=3500, menu=아메리칸애플생크림와플} AND {request=4등분 해주세요, price=5500, menu=카야버터 토스트} AND ";
-
         int pId = 202;
         String plRoadAddress ="경기 수원시 팔달구 권광로340번길 79";
         String plName = "GS25 우만파크점 앞";
@@ -616,81 +582,7 @@ public class PostController {
             orderList += " AND ";
         }
 
-        //        String ParamData = "{ \"plRoadAddress\" : \""+plRoadAddress+"\", \"plName\" : \""+plName+"\", \"ordererPhone\" : \""+ordererPhone+"\", \"orderUrl\" : \""+orderUrl+"\", \"orderList\" : \""+orderList+"\"}";
         boolean success = autoOrder(plRoadAddress, plName, ordererPhone, orderUrl, orderList);
         System.out.println("success = " + success);
-
-        /*
-        //http 요청 시 필요한 url 주소를 변수 선언
-        String totalUrl = "";
-        totalUrl = UrlData.trim().toString();
-
-        //http 통신을 하기위한 객체 선언 실시
-        URL url = null;
-        HttpURLConnection conn = null;
-
-        //http 통신 요청 후 응답 받은 데이터를 담기 위한 변수
-        String responseData = "";
-        BufferedReader br = null;
-        StringBuffer sb = null;
-
-        //메소드 호출 결과값을 반환하기 위한 변수
-        String returnData = "";
-
-        try {
-            //파라미터로 들어온 url을 사용해 connection 실시
-            url = new URL(totalUrl);
-            conn = (HttpURLConnection) url.openConnection();
-
-            //http 요청에 필요한 타입 정의 실시
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; utf-8"); //post body json으로 던지기 위함
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setDoOutput(true); //OutputStream을 사용해서 post body 데이터 전송
-            try (OutputStream os = conn.getOutputStream()){
-                byte request_data[] = ParamData.getBytes("utf-8");
-                os.write(request_data);
-                os.close();
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-            }
-
-            //http 요청 실시
-            conn.connect();
-            System.out.println("http 요청 방식 : "+"POST BODY JSON");
-            System.out.println("http 요청 타입 : "+"application/json");
-            System.out.println("http 요청 주소 : "+UrlData);
-            System.out.println("http 요청 데이터 : "+ParamData);
-            System.out.println("");
-
-            //http 요청 후 응답 받은 데이터를 버퍼에 쌓는다
-            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            sb = new StringBuffer();
-            while ((responseData = br.readLine()) != null) {
-                sb.append(responseData); //StringBuffer에 응답받은 데이터 순차적으로 저장 실시
-            }
-
-            //메소드 호출 완료 시 반환하는 변수에 버퍼 데이터 삽입 실시
-            returnData = sb.toString();
-
-            //http 요청 응답 코드 확인 실시
-            String responseCode = String.valueOf(conn.getResponseCode());
-            System.out.println("http 응답 코드 : "+responseCode);
-            System.out.println("http 응답 데이터 : "+returnData);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            //http 요청 및 응답 완료 후 BufferedReader를 닫아줍니다
-            try {
-                if (br != null) {
-                    br.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        */
     }
 }
